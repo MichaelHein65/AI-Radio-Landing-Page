@@ -141,7 +141,7 @@ function render() {
                   <small>Sendungen nachhören</small>
                 </span>
               </a>
-              <a class="media-link textbook-link" href="${station.textbookUrl}">
+              <a class="media-link textbook-link" href="${station.textbookUrl}" target="_blank" rel="noopener">
                 <i data-lucide="book-open"></i>
                 <span>
                   <strong>Textbooks</strong>
