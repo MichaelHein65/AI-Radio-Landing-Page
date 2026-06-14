@@ -1,0 +1,166 @@
+{
+  "station": {
+    "name": "Mike's AI Radio",
+    "tagline": "AI-Musik live aus dem Studio",
+    "streamUrl": "/stream.mp3",
+    "podcastUrl": "https://ai-radio.cc/podcast/ai-radio/",
+    "textbookUrl": "https://ai-radio.cc/podcast/ai-radio/textbooks/",
+    "appStoreUrl": "https://apps.apple.com/app/id6760590879"
+  },
+  "shows": {
+    "velvet-after-midnight": {
+      "title": "R&B Velvet after midnight",
+      "shortTitle": "Velvet After Midnight",
+      "subtitle": "R&B night flow",
+      "cover": "/assets/covers/cover-rb.png",
+      "description": "Eine elegante nächtliche R&B-Reise durch Neonlicht, Regen, späte Gespräche und die leise Melancholie urbaner Nähe."
+    },
+    "electronic-depths": {
+      "title": "Electronic Depths",
+      "shortTitle": "Electronic Depths",
+      "subtitle": "Deep signals",
+      "cover": "/assets/covers/cover-electro.png",
+      "description": "Elektronische Stücke zwischen Tiefe, Reduktion und klanglicher Weite."
+    },
+    "blue-structures": {
+      "title": "Jazz - Blue Structures",
+      "shortTitle": "Blue Structures",
+      "subtitle": "Night jazz",
+      "cover": "/assets/covers/cover-jazz.png",
+      "description": "Jazz jenseits von Klischees: konzentriert, atmosphärisch und bewusst kuratiert."
+    },
+    "morning-soul": {
+      "title": "Morning Soul",
+      "shortTitle": "Morning Soul",
+      "subtitle": "Morning glow",
+      "cover": "/assets/covers/cover-soul.png",
+      "description": "Wärme, Groove und Stimme: ein eleganter Start in den Morgen."
+    },
+    "open-road-country": {
+      "title": "Open Road Country",
+      "shortTitle": "Open Road Country",
+      "subtitle": "Wide road stories",
+      "cover": "/assets/covers/cover-country.png",
+      "description": "Erdige Songs, klare Melodien und erzählerische Nähe."
+    },
+    "blues-at-five": {
+      "title": "Blues at five",
+      "shortTitle": "Blues at Five",
+      "subtitle": "Late light blues",
+      "cover": "/assets/covers/cover-blues.png",
+      "description": "Viele Facetten des Blues, von staubigem Delta bis modernem Noir."
+    },
+    "pure-metal": {
+      "title": "Pure Metal",
+      "shortTitle": "Pure Metal",
+      "subtitle": "Pure metal",
+      "cover": "/assets/covers/cover-metal.png",
+      "description": "Verschiedene Facetten des Metal vom Feinsten."
+    },
+    "chanson-electrique": {
+      "title": "Chanson Électrique",
+      "shortTitle": "Chanson Électrique",
+      "subtitle": "Paris circuits",
+      "cover": "/assets/covers/cover-chanson-electrique.png",
+      "description": "Französische Lieder zwischen Zärtlichkeit, Haltung und Schatten."
+    },
+    "saxophone-tunes": {
+      "title": "Saxophone Tunes",
+      "shortTitle": "Saxophone Tunes",
+      "subtitle": "Midnight brass",
+      "cover": "/assets/covers/cover-saxophone.png",
+      "description": "Eine instrumentale Reise durch die vielen Gesichter des Saxophons."
+    },
+    "indie-northern-skies": {
+      "title": "Indie - Northern Skies",
+      "shortTitle": "Northern Skies",
+      "subtitle": "Indie currents",
+      "cover": "/assets/covers/cover-indie.png",
+      "description": "Gitarren, Haltung und Leichtigkeit für den Nachmittag."
+    },
+    "balkan-disco": {
+      "title": "Balkan Disco",
+      "shortTitle": "Balkan Disco",
+      "subtitle": "Brass, bass, neon",
+      "cover": "/assets/covers/cover-balkan-disco.png",
+      "description": "Kroatische Hooks, rasende Bläser und Clubbeats bis zum Morgengrauen."
+    },
+    "grace-omalley": {
+      "title": "Irish Folk - Grace O'Malley",
+      "shortTitle": "Grace O'Malley",
+      "subtitle": "Irish folk saga",
+      "cover": "/assets/covers/cover-irish.png",
+      "description": "Eine musikalische Geschichte zwischen Küste, Krone und Umbruch."
+    },
+    "rap-signal": {
+      "title": "Rap - No Peace in the Signal",
+      "shortTitle": "No Peace in the Signal",
+      "subtitle": "Rap report",
+      "cover": "/assets/covers/cover-rap.png",
+      "description": "Politische Rap-Tracks über Macht, Miete, Grenzen, Propaganda und Widerstand."
+    },
+    "kingston-skies": {
+      "title": "Reggae - Kingston Skies",
+      "shortTitle": "Kingston Skies",
+      "subtitle": "Reggae sunlight",
+      "cover": "/assets/covers/cover-reggae.png",
+      "description": "Reggae-Wärme von Roots und Lovers Rock bis Dub und urbaner Fusion."
+    },
+    "golden-days": {
+      "title": "70's - Golden Days, Neon Nights",
+      "shortTitle": "Golden Days",
+      "subtitle": "70s neon nights",
+      "cover": "/assets/covers/cover-70s.png",
+      "description": "Retro-Licht, Disco-Pop und grosse Choruses."
+    },
+    "baroque-hour": {
+      "title": "Baroque Hour",
+      "shortTitle": "Baroque Hour",
+      "subtitle": "Sacred drama",
+      "cover": "/assets/covers/cover-sacred.png",
+      "description": "Sakrale barocke Texturen und chorale Tiefe."
+    },
+    "weltklang": {
+      "title": "Weltklang",
+      "shortTitle": "Weltklang",
+      "subtitle": "World folk routes",
+      "cover": "/assets/covers/cover-world.png",
+      "description": "Weltmusikroute mit Folk-Farben und offenen Räumen."
+    }
+  },
+  "defaultSlots": [
+    { "hour": 0, "show": "velvet-after-midnight" },
+    { "hour": 1, "show": "electronic-depths" },
+    { "hour": 2, "show": "blue-structures" },
+    { "hour": 3, "show": "morning-soul" },
+    { "hour": 4, "show": "open-road-country" },
+    { "hour": 5, "show": "blues-at-five" },
+    { "hour": 6, "show": "pure-metal" },
+    { "hour": 7, "show": "chanson-electrique" },
+    { "hour": 8, "show": "saxophone-tunes" },
+    { "hour": 9, "show": "open-road-country" },
+    { "hour": 10, "show": "blue-structures" },
+    { "hour": 11, "show": "morning-soul" },
+    { "hour": 12, "show": "electronic-depths" },
+    { "hour": 13, "show": "chanson-electrique" },
+    { "hour": 14, "show": "indie-northern-skies" },
+    { "hour": 15, "show": "velvet-after-midnight" },
+    { "hour": 16, "show": "balkan-disco" },
+    { "hour": 17, "show": "saxophone-tunes" },
+    { "hour": 18, "show": "grace-omalley" },
+    { "hour": 19, "show": "chanson-electrique" },
+    { "hour": 20, "show": "rap-signal" },
+    { "hour": 21, "show": "pure-metal" },
+    { "hour": 22, "show": "kingston-skies" },
+    { "hour": 23, "show": "electronic-depths" }
+  ],
+  "weekdays": [
+    { "id": "monday", "label": "Mo", "name": "Montag", "slots": "default" },
+    { "id": "tuesday", "label": "Di", "name": "Dienstag", "slots": "default" },
+    { "id": "wednesday", "label": "Mi", "name": "Mittwoch", "slots": "default" },
+    { "id": "thursday", "label": "Do", "name": "Donnerstag", "slots": "default" },
+    { "id": "friday", "label": "Fr", "name": "Freitag", "slots": "default" },
+    { "id": "saturday", "label": "Sa", "name": "Samstag", "slots": "default" },
+    { "id": "sunday", "label": "So", "name": "Sonntag", "slots": "default" }
+  ]
+}
