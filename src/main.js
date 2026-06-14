@@ -89,7 +89,7 @@ function render() {
   app.innerHTML = `
     <header class="site-header">
       <a class="brand" href="#top" aria-label="${station.name}">
-        <img src="/assets/img/ai-radio-icon.png" alt="" />
+        <img src="/assets/img/ai-radio-icon.webp" alt="" decoding="async" />
         <span>${station.name}</span>
       </a>
       <nav class="nav-links" aria-label="Hauptnavigation">
@@ -112,7 +112,7 @@ function render() {
             <p class="lead">Ein direkter Einstieg in neue AI-Musik: aktuelle Sendung, nächste Shows und Community auf einer Seite.</p>
 
             <div class="player-panel" aria-label="Webradio Player">
-              <img class="now-show-thumb" id="heroNowCover" src="${activeSlot.show.cover}" alt="" />
+              <img class="now-show-thumb" id="heroNowCover" src="${activeSlot.show.cover}" alt="" decoding="async" />
               <div>
                 <span class="panel-label">Jetzt live</span>
                 <strong id="heroNowTitle">${escapeHtml(activeSlot.show.shortTitle)}</strong>
@@ -126,7 +126,7 @@ function render() {
               </div>
             </div>
             <div class="next-show-strip" aria-label="Nächste Sendung">
-              <img id="nextShowCover" src="${nextSlot.show.cover}" alt="" />
+              <img id="nextShowCover" src="${nextSlot.show.cover}" alt="" loading="lazy" decoding="async" />
               <div>
                 <span>Nächste Sendung</span>
                 <strong id="nextShowTitle">${escapeHtml(nextSlot.show.shortTitle)}</strong>
@@ -191,7 +191,7 @@ function render() {
         </div>
 
         <div class="selected-show">
-          <img src="${selectedShow.cover}" alt="" />
+          <img src="${selectedShow.cover}" alt="" loading="lazy" decoding="async" />
           <div>
             <span>${escapeHtml(selectedDay.name)} · ${formatHourRange(selectedSlots[state.selectedIndex]?.hour ?? activeSlot.hour)}</span>
             <h3>${escapeHtml(selectedShow.title)}</h3>
@@ -207,7 +207,7 @@ function render() {
             ${selectedSlots.map((slot, index) => `
               <button class="schedule-row ${isActiveSlot(slot) ? "is-live" : ""}" type="button" data-index="${index}">
                 <time>${String(slot.hour).padStart(2, "0")}:00</time>
-                <img src="${slot.show.cover}" alt="" loading="lazy" />
+                <img src="${slot.show.cover}" alt="" loading="lazy" decoding="async" />
                 <span>${escapeHtml(slot.show.shortTitle)}</span>
                 ${isActiveSlot(slot) ? "<strong>Live</strong>" : ""}
               </button>
@@ -303,6 +303,7 @@ function renderCarousel(slots) {
   return slots.map((slot, index) => {
     const relative = getRelativePosition(index, state.selectedIndex, slots.length) + state.carouselDragProgress;
     const isSelected = index === state.selectedIndex;
+    const shouldLoadImage = Math.abs(relative) <= 3.4 || isSelected || isActiveSlot(slot);
     const pose = getCarouselPose(relative);
     const style = [
       `--x:${pose.x}`,
@@ -317,7 +318,7 @@ function renderCarousel(slots) {
 
     return `
       <button class="show-card ${isSelected ? "is-selected" : ""} ${isActiveSlot(slot) ? "is-live" : ""}" type="button" data-index="${index}" style="${style}">
-        <img src="${slot.show.cover}" alt="" draggable="false" />
+        ${shouldLoadImage ? `<img src="${slot.show.cover}" alt="" draggable="false" loading="lazy" decoding="async" />` : ""}
         <span class="show-time">${String(slot.hour).padStart(2, "0")}:00</span>
         ${isActiveSlot(slot) ? "<span class=\"live-chip\">Live</span>" : ""}
         <span class="show-text">
@@ -586,7 +587,21 @@ function paintCarouselFrame(progress) {
     card.style.setProperty("--saturation", pose.saturation);
     card.style.setProperty("--z", String(pose.zIndex));
     card.style.pointerEvents = Math.abs(relative) > 2.65 ? "none" : "";
+    if (Math.abs(relative) <= 3.4 && slots[index]) {
+      ensureCardImage(card, slots[index].show.cover);
+    }
   }
+}
+
+function ensureCardImage(card, cover) {
+  if (!cover || card.querySelector("img")) return;
+  const image = document.createElement("img");
+  image.src = cover;
+  image.alt = "";
+  image.draggable = false;
+  image.loading = "lazy";
+  image.decoding = "async";
+  card.prepend(image);
 }
 
 function updateCarouselSelectionUi() {
@@ -947,7 +962,7 @@ function updateClock() {
 function initHeroSphere(container, imageUrl) {
   if (!container) return null;
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setClearColor(0x000000, 0);
   container.appendChild(renderer.domElement);

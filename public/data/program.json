@@ -12,119 +12,119 @@
       "title": "R&B Velvet after midnight",
       "shortTitle": "Velvet After Midnight",
       "subtitle": "R&B night flow",
-      "cover": "/assets/covers/cover-rb.png",
+      "cover": "/assets/covers/cover-rb-512.webp",
       "description": "Eine elegante nächtliche R&B-Reise durch Neonlicht, Regen, späte Gespräche und die leise Melancholie urbaner Nähe."
     },
     "electronic-depths": {
       "title": "Electronic Depths",
       "shortTitle": "Electronic Depths",
       "subtitle": "Deep signals",
-      "cover": "/assets/covers/cover-electro.png",
+      "cover": "/assets/covers/cover-electro-512.webp",
       "description": "Elektronische Stücke zwischen Tiefe, Reduktion und klanglicher Weite."
     },
     "blue-structures": {
       "title": "Jazz - Blue Structures",
       "shortTitle": "Blue Structures",
       "subtitle": "Night jazz",
-      "cover": "/assets/covers/cover-jazz.png",
+      "cover": "/assets/covers/cover-jazz-512.webp",
       "description": "Jazz jenseits von Klischees: konzentriert, atmosphärisch und bewusst kuratiert."
     },
     "morning-soul": {
       "title": "Morning Soul",
       "shortTitle": "Morning Soul",
       "subtitle": "Morning glow",
-      "cover": "/assets/covers/cover-soul.png",
+      "cover": "/assets/covers/cover-soul-512.webp",
       "description": "Wärme, Groove und Stimme: ein eleganter Start in den Morgen."
     },
     "open-road-country": {
       "title": "Open Road Country",
       "shortTitle": "Open Road Country",
       "subtitle": "Wide road stories",
-      "cover": "/assets/covers/cover-country.png",
+      "cover": "/assets/covers/cover-country-512.webp",
       "description": "Erdige Songs, klare Melodien und erzählerische Nähe."
     },
     "blues-at-five": {
       "title": "Blues at five",
       "shortTitle": "Blues at Five",
       "subtitle": "Late light blues",
-      "cover": "/assets/covers/cover-blues.png",
+      "cover": "/assets/covers/cover-blues-512.webp",
       "description": "Viele Facetten des Blues, von staubigem Delta bis modernem Noir."
     },
     "pure-metal": {
       "title": "Pure Metal",
       "shortTitle": "Pure Metal",
       "subtitle": "Pure metal",
-      "cover": "/assets/covers/cover-metal.png",
+      "cover": "/assets/covers/cover-metal-512.webp",
       "description": "Verschiedene Facetten des Metal vom Feinsten."
     },
     "chanson-electrique": {
       "title": "Chanson Électrique",
       "shortTitle": "Chanson Électrique",
       "subtitle": "Paris circuits",
-      "cover": "/assets/covers/cover-chanson-electrique.png",
+      "cover": "/assets/covers/cover-chanson-electrique-512.webp",
       "description": "Französische Lieder zwischen Zärtlichkeit, Haltung und Schatten."
     },
     "saxophone-tunes": {
       "title": "Saxophone Tunes",
       "shortTitle": "Saxophone Tunes",
       "subtitle": "Midnight brass",
-      "cover": "/assets/covers/cover-saxophone.png",
+      "cover": "/assets/covers/cover-saxophone-512.webp",
       "description": "Eine instrumentale Reise durch die vielen Gesichter des Saxophons."
     },
     "indie-northern-skies": {
       "title": "Indie - Northern Skies",
       "shortTitle": "Northern Skies",
       "subtitle": "Indie currents",
-      "cover": "/assets/covers/cover-indie.png",
+      "cover": "/assets/covers/cover-indie-512.webp",
       "description": "Gitarren, Haltung und Leichtigkeit für den Nachmittag."
     },
     "balkan-disco": {
       "title": "Balkan Disco",
       "shortTitle": "Balkan Disco",
       "subtitle": "Brass, bass, neon",
-      "cover": "/assets/covers/cover-balkan-disco.png",
+      "cover": "/assets/covers/cover-balkan-disco-512.webp",
       "description": "Kroatische Hooks, rasende Bläser und Clubbeats bis zum Morgengrauen."
     },
     "grace-omalley": {
       "title": "Irish Folk - Grace O'Malley",
       "shortTitle": "Grace O'Malley",
       "subtitle": "Irish folk saga",
-      "cover": "/assets/covers/cover-irish.png",
+      "cover": "/assets/covers/cover-irish-512.webp",
       "description": "Eine musikalische Geschichte zwischen Küste, Krone und Umbruch."
     },
     "rap-signal": {
       "title": "Rap - No Peace in the Signal",
       "shortTitle": "No Peace in the Signal",
       "subtitle": "Rap report",
-      "cover": "/assets/covers/cover-rap.png",
+      "cover": "/assets/covers/cover-rap-512.webp",
       "description": "Politische Rap-Tracks über Macht, Miete, Grenzen, Propaganda und Widerstand."
     },
     "kingston-skies": {
       "title": "Reggae - Kingston Skies",
       "shortTitle": "Kingston Skies",
       "subtitle": "Reggae sunlight",
-      "cover": "/assets/covers/cover-reggae.png",
+      "cover": "/assets/covers/cover-reggae-512.webp",
       "description": "Reggae-Wärme von Roots und Lovers Rock bis Dub und urbaner Fusion."
     },
     "golden-days": {
       "title": "70's - Golden Days, Neon Nights",
       "shortTitle": "Golden Days",
       "subtitle": "70s neon nights",
-      "cover": "/assets/covers/cover-70s.png",
+      "cover": "/assets/covers/cover-70s-512.webp",
       "description": "Retro-Licht, Disco-Pop und grosse Choruses."
     },
     "baroque-hour": {
       "title": "Baroque Hour",
       "shortTitle": "Baroque Hour",
       "subtitle": "Sacred drama",
-      "cover": "/assets/covers/cover-sacred.png",
+      "cover": "/assets/covers/cover-sacred-512.webp",
       "description": "Sakrale barocke Texturen und chorale Tiefe."
     },
     "weltklang": {
       "title": "Weltklang",
       "shortTitle": "Weltklang",
       "subtitle": "World folk routes",
-      "cover": "/assets/covers/cover-world.png",
+      "cover": "/assets/covers/cover-world-512.webp",
       "description": "Weltmusikroute mit Folk-Farben und offenen Räumen."
     }
   },
