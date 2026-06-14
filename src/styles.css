@@ -609,7 +609,9 @@ h3 {
   bottom: 1rem;
   display: grid;
   gap: 0.25rem;
+  color: #fff8ef;
   text-align: left;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.72);
 }
 
 .show-text strong {
