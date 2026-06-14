@@ -202,7 +202,6 @@ function render() {
         <div class="schedule-wrap ${state.showTable ? "is-visible" : ""}" id="scheduleWrap">
           <div class="schedule-header">
             <h3>Programmplan ${escapeHtml(dayNameById[state.selectedDayId] ?? selectedDay.name)}</h3>
-            <p>Änderungen erfolgen in <code>public/data/program.json</code>.</p>
           </div>
           <div class="schedule-grid">
             ${selectedSlots.map((slot, index) => `
