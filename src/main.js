@@ -51,6 +51,7 @@ const state = {
   carouselDragProgress: 0,
   carouselAnimationFrame: 0,
   carouselReturnTimer: 0,
+  mediaSessionKey: "",
   audio: new Audio(),
   sphere: null
 };
@@ -294,6 +295,7 @@ function render() {
   createIcons({ icons: iconSet });
   bindEvents();
   syncAudioElement();
+  updateMediaSession();
   updateClock();
   state.sphere?.dispose?.();
   state.sphere = initHeroSphere(document.querySelector("#sphereMount"), getActiveSlot().show.cover);
@@ -668,6 +670,7 @@ async function togglePlayback() {
   if (state.isPlaying) {
     state.audio.pause();
     state.isPlaying = false;
+    updateMediaSession();
     render();
     return;
   }
@@ -678,6 +681,7 @@ async function togglePlayback() {
   } catch {
     state.isPlaying = false;
   }
+  updateMediaSession();
   render();
 }
 
@@ -927,6 +931,42 @@ function syncAudioElement() {
   state.audio.muted = false;
 }
 
+function updateMediaSession() {
+  if (!state.config) return;
+  const station = state.config.station;
+  const active = getActiveSlot();
+  const title = active.show.shortTitle || active.show.title || station.name;
+  const artist = `${formatHourRange(active.hour)} · ${active.show.subtitle}`;
+  const album = station.name;
+  const coverUrl = new URL(active.show.cover, window.location.href).href;
+  const jpegFallbackUrl = coverUrl.replace(/-512\.webp$/, "-512.jpg");
+  const key = `${title}|${artist}|${coverUrl}|${state.isPlaying}`;
+
+  document.title = state.isPlaying ? `${title} · ${station.name}` : station.name;
+
+  if (!("mediaSession" in navigator) || typeof MediaMetadata === "undefined") return;
+  navigator.mediaSession.playbackState = state.isPlaying ? "playing" : "paused";
+  if (state.mediaSessionKey === key) return;
+  state.mediaSessionKey = key;
+
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title,
+    artist,
+    album,
+    artwork: [
+      { src: coverUrl, sizes: "512x512", type: "image/webp" },
+      { src: jpegFallbackUrl, sizes: "512x512", type: "image/jpeg" }
+    ]
+  });
+
+  navigator.mediaSession.setActionHandler?.("play", () => {
+    if (!state.isPlaying) togglePlayback();
+  });
+  navigator.mediaSession.setActionHandler?.("pause", () => {
+    if (state.isPlaying) togglePlayback();
+  });
+}
+
 function startTicks() {
   window.setInterval(() => {
     const active = getActiveSlot();
@@ -945,6 +985,7 @@ function startTicks() {
     }
     document.querySelector("#nowPlayingTitle") && (document.querySelector("#nowPlayingTitle").textContent = active.show.shortTitle);
     state.sphere?.setImage(active.show.cover);
+    updateMediaSession();
     updateClock();
   }, 1000);
 }
