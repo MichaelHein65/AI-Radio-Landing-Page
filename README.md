@@ -30,6 +30,7 @@ src/styles.css             Layout, Theme, responsive Darstellung
 public/data/program.json   Programmdaten und Tagespläne
 public/assets/covers/      Hero- und Coverbilder der Sendungen
 public/assets/img/         App-/Logo-Bilder
+podcast/ai-radio/textbooks Textbook-App mit Liedtexten und optimierten Covern
 ```
 
 ## Programm pflegen
@@ -72,3 +73,4 @@ curl -fsS https://ai-radio.cc/ | sed -n '1,24p'
 - `dist/`, `node_modules/` und `artifacts/` werden nicht versioniert.
 - Coverbilder müssen unter `public/assets/covers/` liegen und in `program.json` referenziert werden.
 - Sichtbare deutsche Texte sind UTF-8 und sollen mit echten Umlauten gepflegt werden.
+- Textbook-Cover werden als kleine `*-512.webp`-Dateien ausgeliefert, damit Safari und Chrome nicht an großen Originalbildern hängen bleiben.
