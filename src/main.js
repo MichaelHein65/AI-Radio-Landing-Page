@@ -138,7 +138,7 @@ function render() {
                 <small id="heroNowMeta">${formatHourRange(activeSlot.hour)} · ${escapeHtml(activeSlot.show.subtitle)}</small>
               </div>
               <div class="player-actions">
-                <button class="primary-action" id="playToggle" type="button" ${state.playbackStarting || state.playerLockedByOther ? "disabled" : ""}>
+                <button class="primary-action" id="playToggle" type="button" ${state.playbackStarting ? "disabled" : ""}>
                   <i data-lucide="${state.isPlaying ? "pause" : "play"}"></i>
                   <span>${getPlaybackButtonText()}</span>
                 </button>
@@ -707,11 +707,7 @@ async function togglePlayback() {
   }
   state.lastPlaybackStartAttemptAt = now;
 
-  if (!acquirePlayerLock()) {
-    updatePlaybackUi();
-    logPlayerEvent("blocked-other-tab", { reason: "other-tab" });
-    return;
-  }
+  acquirePlayerLock();
 
   try {
     state.playbackStarting = true;
@@ -1015,8 +1011,7 @@ function isLockedByOther(lock = getPlayerLock()) {
 function acquirePlayerLock() {
   const lock = getPlayerLock();
   if (isLockedByOther(lock)) {
-    state.playerLockedByOther = true;
-    return false;
+    logPlayerEvent("takeover-other-tab", { reason: "other-tab" });
   }
 
   if (!writePlayerLock()) {
@@ -1071,9 +1066,23 @@ function releasePlayerLock() {
 
 function refreshPlayerLockState() {
   const nextLocked = isLockedByOther();
+  if (nextLocked && (state.isPlaying || state.playbackRequested || state.playbackStarting)) {
+    stopPlaybackForOtherTab();
+  }
   if (state.playerLockedByOther === nextLocked) return;
   state.playerLockedByOther = nextLocked;
   updatePlaybackUi();
+}
+
+function stopPlaybackForOtherTab() {
+  state.playbackStarting = false;
+  state.playbackRequested = false;
+  state.isPlaying = false;
+  clearStreamRetryTimer();
+  stopCurrentAudioStream();
+  logPlayerEvent("stopped-for-other-tab", { reason: "other-tab" });
+  updatePlaybackUi();
+  updateMediaSession();
 }
 
 function syncAudioElement() {
@@ -1221,7 +1230,7 @@ function updatePlaybackUi() {
     status.textContent = getStreamStatusText();
   }
   if (!button) return;
-  button.disabled = state.playbackStarting || state.playerLockedByOther;
+  button.disabled = state.playbackStarting;
   button.innerHTML = `
     <i data-lucide="${state.isPlaying ? "pause" : "play"}"></i>
     <span>${getPlaybackButtonText()}</span>
@@ -1230,13 +1239,11 @@ function updatePlaybackUi() {
 }
 
 function getPlaybackButtonText() {
-  if (state.playerLockedByOther) return "Anderer Tab";
   if (state.playbackStarting) return "Verbinde";
   return state.isPlaying ? "Pause" : "Start";
 }
 
 function getStreamStatusText() {
-  if (state.playerLockedByOther) return "Läuft in anderem Tab";
   if (state.playbackStarting) return "Verbinde";
   return state.isPlaying ? "Verbunden" : "Bereit";
 }
