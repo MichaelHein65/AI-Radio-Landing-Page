@@ -53,6 +53,10 @@ const state = {
   carouselReturnTimer: 0,
   playbackStarting: false,
   playbackRequested: false,
+  playerLockedByOther: false,
+  playerLockTimer: 0,
+  playerLockWatchTimer: 0,
+  tabId: createStreamSessionId(),
   streamRetryCount: 0,
   streamRetryTimer: 0,
   streamSessionId: "",
@@ -74,6 +78,9 @@ const dayNameById = {
   saturday: "Samstag",
   sunday: "Sonntag"
 };
+const PLAYER_LOCK_KEY = "ai-radio-active-player";
+const PLAYER_LOCK_TTL_MS = 12000;
+const PLAYER_LOCK_HEARTBEAT_MS = 3000;
 
 init();
 
@@ -84,6 +91,7 @@ async function init() {
   state.selectedIndex = getCurrentSlotIndex();
   state.streamSessionId = createStreamSessionId();
   setupAudioEventHandlers();
+  setupPlayerLock();
   applyTheme();
   render();
   startTicks();
@@ -130,9 +138,9 @@ function render() {
                 <small id="heroNowMeta">${formatHourRange(activeSlot.hour)} · ${escapeHtml(activeSlot.show.subtitle)}</small>
               </div>
               <div class="player-actions">
-                <button class="primary-action" id="playToggle" type="button" ${state.playbackStarting ? "disabled" : ""}>
+                <button class="primary-action" id="playToggle" type="button" ${state.playbackStarting || state.playerLockedByOther ? "disabled" : ""}>
                   <i data-lucide="${state.isPlaying ? "pause" : "play"}"></i>
-                  <span>${state.playbackStarting ? "Verbinde" : state.isPlaying ? "Pause" : "Start"}</span>
+                  <span>${getPlaybackButtonText()}</span>
                 </button>
               </div>
             </div>
@@ -231,7 +239,7 @@ function render() {
         <div class="listen-grid">
           <article class="stat-tile">
             <span>Stream</span>
-            <strong id="streamStatus">${state.isPlaying ? "Verbunden" : "Bereit"}</strong>
+            <strong id="streamStatus">${getStreamStatusText()}</strong>
           </article>
           <article class="stat-tile">
             <span>Jetzt läuft</span>
@@ -687,6 +695,7 @@ async function togglePlayback() {
     clearStreamRetryTimer();
     stopCurrentAudioStream();
     state.isPlaying = false;
+    releasePlayerLock();
     updateMediaSession();
     render();
     return;
@@ -697,6 +706,12 @@ async function togglePlayback() {
     return;
   }
   state.lastPlaybackStartAttemptAt = now;
+
+  if (!acquirePlayerLock()) {
+    updatePlaybackUi();
+    logPlayerEvent("blocked-other-tab", { reason: "other-tab" });
+    return;
+  }
 
   try {
     state.playbackStarting = true;
@@ -712,6 +727,7 @@ async function togglePlayback() {
     logPlayerEvent("play-failed", { reason: "play" });
     state.playbackRequested = false;
     state.isPlaying = false;
+    releasePlayerLock();
   } finally {
     state.playbackStarting = false;
   }
@@ -955,6 +971,111 @@ function isLocalPreview() {
   return ["localhost", "127.0.0.1", ""].includes(window.location.hostname);
 }
 
+function setupPlayerLock() {
+  refreshPlayerLockState();
+  state.playerLockWatchTimer = window.setInterval(refreshPlayerLockState, PLAYER_LOCK_HEARTBEAT_MS);
+  window.addEventListener("storage", (event) => {
+    if (event.key === PLAYER_LOCK_KEY) {
+      refreshPlayerLockState();
+    }
+  });
+  window.addEventListener("pagehide", releasePlayerLock);
+  window.addEventListener("beforeunload", releasePlayerLock);
+}
+
+function getPlayerLock() {
+  try {
+    const raw = window.localStorage.getItem(PLAYER_LOCK_KEY);
+    if (!raw) return null;
+    const lock = JSON.parse(raw);
+    if (!lock || typeof lock !== "object") return null;
+    if (Number(lock.expiresAt) <= Date.now()) {
+      try {
+        window.localStorage.removeItem(PLAYER_LOCK_KEY);
+      } catch {
+        // Ignore storage errors while clearing an expired lock.
+      }
+      return null;
+    }
+    return lock;
+  } catch {
+    try {
+      window.localStorage.removeItem(PLAYER_LOCK_KEY);
+    } catch {
+      // Ignore storage errors while clearing a malformed lock.
+    }
+    return null;
+  }
+}
+
+function isLockedByOther(lock = getPlayerLock()) {
+  return Boolean(lock && lock.tabId && lock.tabId !== state.tabId);
+}
+
+function acquirePlayerLock() {
+  const lock = getPlayerLock();
+  if (isLockedByOther(lock)) {
+    state.playerLockedByOther = true;
+    return false;
+  }
+
+  if (!writePlayerLock()) {
+    return true;
+  }
+  startPlayerLockHeartbeat();
+  state.playerLockedByOther = false;
+  return true;
+}
+
+function writePlayerLock() {
+  const now = Date.now();
+  try {
+    window.localStorage.setItem(PLAYER_LOCK_KEY, JSON.stringify({
+      tabId: state.tabId,
+      sessionId: state.streamSessionId,
+      updatedAt: now,
+      expiresAt: now + PLAYER_LOCK_TTL_MS
+    }));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function startPlayerLockHeartbeat() {
+  if (state.playerLockTimer) return;
+  state.playerLockTimer = window.setInterval(() => {
+    if (!state.playbackRequested && !state.playbackStarting && !state.isPlaying) {
+      releasePlayerLock();
+      return;
+    }
+    writePlayerLock();
+  }, PLAYER_LOCK_HEARTBEAT_MS);
+}
+
+function releasePlayerLock() {
+  const lock = getPlayerLock();
+  if (lock && lock.tabId === state.tabId) {
+    try {
+      window.localStorage.removeItem(PLAYER_LOCK_KEY);
+    } catch {
+      // Ignore storage errors while closing the tab.
+    }
+  }
+  if (state.playerLockTimer) {
+    window.clearInterval(state.playerLockTimer);
+    state.playerLockTimer = 0;
+  }
+  state.playerLockedByOther = false;
+}
+
+function refreshPlayerLockState() {
+  const nextLocked = isLockedByOther();
+  if (state.playerLockedByOther === nextLocked) return;
+  state.playerLockedByOther = nextLocked;
+  updatePlaybackUi();
+}
+
 function syncAudioElement() {
   state.audio.preload = "none";
   state.audio.volume = state.volume;
@@ -1097,15 +1218,27 @@ function updatePlaybackUi() {
   const button = document.querySelector("#playToggle");
   const status = document.querySelector("#streamStatus");
   if (status) {
-    status.textContent = state.playbackStarting ? "Verbinde" : state.isPlaying ? "Verbunden" : "Bereit";
+    status.textContent = getStreamStatusText();
   }
   if (!button) return;
-  button.disabled = state.playbackStarting;
+  button.disabled = state.playbackStarting || state.playerLockedByOther;
   button.innerHTML = `
     <i data-lucide="${state.isPlaying ? "pause" : "play"}"></i>
-    <span>${state.playbackStarting ? "Verbinde" : state.isPlaying ? "Pause" : "Start"}</span>
+    <span>${getPlaybackButtonText()}</span>
   `;
   createIcons({ icons: iconSet });
+}
+
+function getPlaybackButtonText() {
+  if (state.playerLockedByOther) return "Anderer Tab";
+  if (state.playbackStarting) return "Verbinde";
+  return state.isPlaying ? "Pause" : "Start";
+}
+
+function getStreamStatusText() {
+  if (state.playerLockedByOther) return "Läuft in anderem Tab";
+  if (state.playbackStarting) return "Verbinde";
+  return state.isPlaying ? "Verbunden" : "Bereit";
 }
 
 function updateMediaSession() {
