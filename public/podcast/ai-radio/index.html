@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mike&#x27;s AI Radio</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+      background: Canvas;
+      color: CanvasText;
+    }
+    main { max-width: 920px; margin: 0 auto; padding: 32px 18px 56px; }
+    header { display: grid; grid-template-columns: 140px 1fr; gap: 22px; align-items: center; margin-bottom: 30px; }
+    .cover { width: 140px; height: 140px; object-fit: cover; }
+    h1 { margin: 0 0 8px; font-size: clamp(2rem, 6vw, 4rem); line-height: 1; }
+    h2 { margin: 0 0 8px; font-size: 1.25rem; }
+    a { color: LinkText; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+    .button { display: inline-flex; align-items: center; justify-content: center; min-height: 42px; border: 1px solid color-mix(in srgb, CanvasText 22%, transparent); border-radius: 8px; padding: 8px 13px; text-decoration: none; font-weight: 700; }
+    article { display: grid; grid-template-columns: 112px 1fr; gap: 18px; border-top: 1px solid color-mix(in srgb, CanvasText 18%, transparent); padding: 22px 0; }
+    .episode-cover { width: 112px; height: 112px; object-fit: cover; }
+    audio { width: 100%; margin: 8px 0 10px; }
+    summary { cursor: pointer; }
+    ol { padding-left: 22px; }
+    @media (max-width: 600px) {
+      header { grid-template-columns: 1fr; }
+      .cover { width: 112px; height: 112px; }
+      article { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <img class="cover" src="cover.jpg" alt="">
+      <div>
+        <h1>Mike&#x27;s AI Radio</h1>
+        <p>Mike&#x27;s AI Radio ist ein kuratierter Musikpodcast mit KI-produzierten Radiosendungen: Genre-Reisen von Weltmusik, Soul, Jazz und Blues bis Metal, Reggae, Electronic, Country, Rap und Balkan Disco. Jede Episode verbindet Musik, Atmosphäre und Moderationsdramaturgie zu einer eigenständigen Sendung.</p>
+        <p class="actions">
+          <a class="button" href="https://ai-radio.cc/podcast/ai-radio/feed.xml">RSS-Feed abonnieren</a>
+          <a class="button" href="textbooks/">Textbooks lesen</a>
+        </p>
+      </div>
+    </header>
+    
+      <article>
+        
+        <div>
+          <h2>17 - Chanson Électrique</h2>
+          <p>Französische Lieder zwischen Zärtlichkeit, Haltung und Schatten</p>
+          <audio controls preload="none" src="episodes/017a-chanson-electrique.mp3"></audio>
+          <details>
+            <summary>Tracks</summary>
+            <ol><li>AI Radio – Chanson Élégant</li><li>La chaise près de la fenêtre</li><li>Le moteur tourne encore</li><li>Circuit fermé</li><li>AI Radio – Circuit Chanson</li><li>Les mains dans les poches</li><li>Le sel sur la langue</li><li>La ligne de craie</li><li>Dans la bouche des journaux</li><li>AI Radio – Le Petit Bal</li><li>Madame Zéro</li><li>Le bal des couteaux pliants</li><li>Les animaux lucides</li><li>Presque rien</li><li>AI Radio – Nous Écoutons</li><li>Nous restons debout</li></ol>
+          </details>
+        </div>
+      </article>
+      <article>
+        
+        <div>
+          <h2>16 - Saxophone Tunes</h2>
+          <p>Eine instrumentale Reise durch die vielen Gesichter des Saxophons: von klassischer Eleganz über Big Band, Jazz, Blues und Funk bis zu Neon-Pop, Balkan-Brass und elektronischen Klangräumen. Im Mittelpunkt steht immer das Saxophon — mal samtig, mal wild, mal melancholisch, mal messerscharf.</p>
+          <audio controls preload="none" src="episodes/16-a-saxophone-tunes.mp3"></audio>
+          <details>
+            <summary>Tracks</summary>
+            <ol><li>Saxophone Tunes</li><li>The Inventor’s Breath</li><li>Velvet Engines</li><li>Swinging Sax Break</li><li>One Blue Window</li><li>Bird Logic</li><li>Midnight Sax Signal</li><li>Honkin’ at Midnight</li><li>Pocket Knife</li><li>Horn in the Pocket</li><li>Neon Confession</li><li>Brass on the Cobblestones</li><li>Circuit Breath ID</li><li>Breath in the Circuit</li><li>The Last Breath of Gold</li><li>Golden Breath Outro</li><li>The Inventor’s Breath</li></ol>
+          </details>
+        </div>
+      </article>
+      <article>
+        <img class="episode-cover" src="covers/15-a-r-b-velvet-after-midnight.jpg" alt="">
+        <div>
+          <h2>15 - R&amp;B Velvet after midnight</h2>
+          <p>Eine elegante nächtliche R&amp;B-Reise durch Neonlicht, Regen, späte Gespräche und die leise Melancholie urbaner Nähe.
+Zwischen Neo Soul, Atmospheric R&amp;B und jazzigen Soli entfalten sich zehn Songs wie Szenen eines Films: warm, luxuriös, verletzlich und bittersüß bis zum ersten Licht des Morgens.</p>
+          <audio controls preload="none" src="episodes/15-a-r-b-velvet-after-midnight.mp3"></audio>
+          <details>
+            <summary>Tracks</summary>
+            <ol><li>R&amp;B Jingle 1</li><li>Champagne After the Fight</li><li>Ghosts in the Backseat</li><li>R&amp;B Jingle 2</li><li>Last Dance Before Sunrise</li><li>Midnight Rooftop Confession</li><li>R&amp;B Jingle 3</li><li>Neon Cathedral</li><li>Perfume on My Leather Jacket</li><li>R&amp;B Jingle 4</li><li>Radio Lights at 2AM</li><li>Silk Sheets &amp; Cigarette Smoke</li><li>R&amp;B Jingle 5</li><li>Too Beautiful to Stay</li><li>Velvet City Rain</li><li>R&amp;B Jingle 1</li><li>Crystal Circuitry</li></ol>
+          </details>
+        </div>
+      </article>
+      <article>
+        <img class="episode-cover" src="covers/14-a-balkan-disco.jpg" alt="">
+        <div>
+          <h2>14 - Balkan Disco</h2>
+          <p>Kroatische Hooks, rasende Bläser und Clubbeats bis zum Morgengrauen — AI Radio tanzt, als gäbe es keine Sperrstunde.</p>
+          <audio controls preload="none" src="episodes/14-a-balkan-disco.mp3"></audio>
+          <details>
+            <summary>Tracks</summary>
+            <ol><li>AI Radio — Balkan Disco Opener (1)</li><li>Ajde, Ajde, Disco Heart (1)</li><li>Black Sea Bassline (1)</li><li>Bucovina Lights (1)</li><li>AI Radio — Balkan Disco Stinger (1)</li><li>Last Trumpet Before Dawn (1)</li><li>No Sleep in Belgrade (1)</li><li>Opa- under the Neon (1)</li><li>AI Radio — Balkan Disco Stinger (2)</li><li>Rakija Moon (1)</li><li>Wedding Band on Fire (1)</li><li>AI Radio — Plešemo Do Zore (1)</li><li>Trumpets at the Border (1)</li><li>Ajde, Ajde, Disco Heart</li><li>AI Radio — Truba Zove (1)</li><li>Black Sea Bassline</li></ol>
+          </details>
+        </div>
+      </article>
+      <article>
+        <img class="episode-cover" src="covers/13-a-rap-no-peace-in-the-signal.jpg" alt="">
+        <div>
+          <h2>13 - Rap-No Peace in the Signal</h2>
+          <p>Zehn politische Rap-Tracks über Krieg, Angst, Macht, Miete, Grenzen, Propaganda und Widerstand. Eine düstere, spitze Sendung über die Frage, wie man in einer lauten, manipulativen Welt den Verstand behält.</p>
+          <audio controls preload="none" src="episodes/13-a-rap-no-peace-in-the-signal.mp3"></audio>
+          <details>
+            <summary>Tracks</summary>
+            <ol><li>Jingle 1</li><li>Opener</li><li>Jingle 1 (1)</li><li>The Map Is Burning</li><li>The Map Is Burning</li><li>Barrel Price Prayer</li><li>Barrel Price Prayer</li><li>Passport Lines</li><li>Passport Lines</li><li>Jingle 2 (1)</li><li>Fear Sells Fast</li><li>Fear Sells Fast</li><li>Rent Eats First</li><li>Rent Eats First</li><li>Jingle 2</li><li>Crowd Control</li><li>Crowd Control</li><li>Flags in the Classroom</li><li>Flags in the Classroom</li><li>Children of the Sanction Age</li><li>Children of the Sanction Age</li><li>Jingle 2 (1)</li><li>We Learn to Breathe in Smoke</li><li>We Learn to Breathe in Smoke</li><li>No Peace in the Signal</li><li>No Peace in the Signal</li><li>Jingle 1 (1)</li><li>Final</li><li>Children of the Sanction Age</li><li>The Map Is Burning</li><li>Jingle 2 (1)</li></ol>
+          </details>
+        </div>
+      </article>
+      <article>
+        <img class="episode-cover" src="covers/12-a-70-s-golden-days-neon-nights.jpg" alt="">
+        <div>
+          <h2>12 - 70&#x27;s-Golden Days, Neon Nights</h2>
+          <p>Eine musikalische Reise durch den Glanz, die Freiheit, die Romantik und die Zukunftslust der 70er- und 80er-Jahre — neu gestaltet im Geist dieser großen Pop-Epochen.</p>
+          <audio controls preload="none" src="episodes/12-a-70-s-golden-days-neon-nights.mp3"></audio>
+          <details>
+            <summary>Tracks</summary>
+            <ol><li>AI Radio — All Night in the Light</li><li>Under the Mirrorball</li><li>Under the Mirrorball</li><li>Into the Golden Light</li><li>Into the Golden Light</li><li>Feel the Glow</li><li>Neon Tomorrow</li><li>Neon Tomorrow</li><li>Move with the Daylight</li><li>Move with the Daylight</li><li>Run to Me Through the Midnight Fire</li><li>Run to Me Through the Midnight Fire</li><li>Golden Days, Neon Nights</li><li>Laughing at the Stop Signs</li><li>Laughing at the Stop Signs</li><li>Stay with Me in the Golden Blue</li><li>Stay with Me in the Golden Blue</li><li>Golden Days, Neon Nights (1)</li><li>Me and You and the Whole Block Too</li><li>Me and You and the Whole Block Too</li><li>When the Streetlights Glow</li><li>When the Streetlights Glow</li><li>Open Horizon</li><li>Open Horizon</li><li>Where the Golden Years Still Shine</li><li>Under the Mirrorball</li><li>Midnight Wire Dub</li></ol>
+          </details>
+        </div>
+      </article>
+      <article>
+        <img class="episode-cover" src="covers/11-a-reggae-kingston-skies.jpg" alt="">
+        <div>
+          <h2>11 - Reggae - Kingston Skies</h2>
+          <p>**Kingston Skies** führt durch zehn Facetten des Reggae – von warmem Roots und spiritueller Tiefe über Lovers Rock und Dub bis zu urbaner Reggae Fusion. Die Sendung verbindet Bass, Sonne, Witz und Widerstand zu einer musikalischen Reise, die zugleich entspannt, klug und voller Bewegung ist.</p>
+          <audio controls preload="none" src="episodes/11-a-reggae-kingston-skies.mp3"></audio>
+          <details>
+            <summary>Tracks</summary>
+            <ol><li>AI Radio — Kingston Skies</li><li>Morning Over Kingston</li><li>Morning Over Kingston</li><li>Babylon of Concrete</li><li>Babylon of Concrete</li><li>Everything Gonna Be Alright</li><li>Love in the Evening Breeze</li><li>Love in the Evening Breeze</li><li>The Sea Knows My Name</li><li>The Sea Knows My Name</li><li>Children of the Street, Children of the Light</li><li>Children of the Street, Children of the Light</li><li>A Letter to Jah</li><li>A Letter to Jah</li><li>Everything Gonna Be Alright (1)</li><li>After the Rain the City Dances</li><li>After the Rain the City Dances</li><li>Echo in the Sound System</li><li>Echo in the Sound System</li><li>Old Wounds, Quiet Heart</li><li>Old Wounds, Quiet Heart</li><li>No Fence Can Hold the Sun</li><li>No Fence Can Hold the Sun</li><li>Good Bass, Good Mood</li><li>After the Rain the City Dances</li><li>Morning Over Kingston</li></ol>
+          </details>
+        </div>
+      </article>
+      <article>
+        <img class="episode-cover" src="covers/10-a-barock-licht-leid-und-erlosung-sakrale-musik.jpg" alt="">
+        <div>
+          <h2>10 - Barock - Licht, Leid und Erlösung - Sakrale Musik</h2>
+          <p>Zwischen Erde und Ewigkeit führt durch die großen Ausdrucksformen geistlicher Musik – von Klage und Passion bis zu Trost, Gericht und Verklärung. Eine musikalische Reise durch sakrale Klangwelten des Barock und ihre Vollendung</p>
+          <audio controls preload="none" src="episodes/10-a-barock-licht-leid-und-erlosung-sakrale-musik.mp3"></audio>
+          <details>
+            <summary>Tracks</summary>
+            <ol><li>AI Radio – Im Licht der Ewigkeit (1)</li><li>Lux Supra Abyssum</li><li>Lux Supra Abyssum</li><li>Sub Pondere Crucis</li><li>Sub Pondere Crucis</li><li>In Pulvere et Spiritu</li><li>In Pulvere et Spiritu</li><li>Ordo Lucis Aeternae</li><li>Ordo Lucis Aeternae</li><li>AI Radio – Im Licht der Ewigkeit (1)</li><li>Exaudi Nos in Nocte</li><li>Exaudi Nos in Nocte</li><li>Dies Irae Super Terram</li><li>Dies Irae Super Terram</li><li>Miserere Post Ignem</li><li>Miserere Post Ignem</li><li>Lux Inter Lacrimas</li><li>Lux Inter Lacrimas</li><li>AI Radio – Im Licht der Ewigkeit (1)</li><li>Requiem Super Nomen Humanum</li><li>Requiem Super Nomen Humanum</li><li>In Luce Pacis Aeternae</li><li>In Luce Pacis Aeternae</li><li>AI Radio – Im Licht der Ewigkeit (1)</li><li>Concerto di Pace Notturna</li><li>Passacaglia ad Lucem</li><li>Concerto di Pace Notturna</li><li>Passacaglia ad Lucem</li><li>AI-Radio Jingle</li><li>Signal Delay Dub</li><li>Holding Pattern Dub</li><li>Signal Delay Dub (1)</li></ol>
+          </details>
+        </div>
+      </article>
+      <article>
+        <img class="episode-cover" src="covers/09-a-blues-at-five.jpg" alt="">
+        <div>
+          <h2>09 - Blues at five</h2>
+          <p>Eine Reise durch viele Facetten des Blues – von staubigem Delta Blues über elektrischen Chicago-Sound bis zu Soul, Swamp und modernem Noir. Die Sendung verbindet klassische Blues-Traditionen mit neuen KI-komponierten Stücken, die von Nacht, Arbeit, Sehnsucht, Reue und einem Rest von Hoffnung erzählen.</p>
+          <audio controls preload="none" src="episodes/09-a-blues-at-five.mp3"></audio>
+          <details>
+            <summary>Tracks</summary>
+            <ol><li>Let the Blues Roll On</li><li>A Love That Never Told the Truth</li><li>A Love That Never Told the Truth</li><li>Dance Through the Ache</li><li>Dance Through the Ache</li><li>He Plays Against His Own Life Tonight</li><li>He Plays Against His Own Life Tonight</li><li>This Is AI Radio Blues</li><li>Midnight Train, Don’t Ask My Name</li><li>Midnight Train, Don’t Ask My Name</li><li>AI Radio Blues (1)</li><li>Rain on State Street</li><li>Rain on State Street</li><li>Sunrise After the Longest Night</li><li>Sunrise After the Longest Night</li><li>The River Knows Your Name</li><li>The River Knows Your Name</li><li>Too Proud to Call You Tonight</li><li>Too Proud to Call You Tonight</li><li>This Is AI Radio Blues</li><li>Blue Hour Dub</li><li>Blue Hour Dub</li><li>Blue Hour Dub</li></ol>
+          </details>
+        </div>
+      </article>
+      <article>
+        <img class="episode-cover" src="covers/08-a-jazz-blue-structures.jpg" alt="">
+        <div>
+          <h2>08 - Jazz - Blue Structures</h2>
+          <p>Eine Stunde Jazz jenseits von Klischees.
+Von kühlen, nächtlichen Klangräumen über rhythmische Energie bis hin zu experimentellen Grenzbereichen und zurück in klare Formen.
+Diese Sendung verbindet klassische Stilrichtungen mit modernen Einflüssen und zeigt Jazz als lebendige, sich ständig verändernde Sprache.
+
+Konzentriert, atmosphärisch und bewusst kuratiert.</p>
+          <audio controls preload="none" src="episodes/08-a-jazz-blue-structures.mp3"></audio>
+          <details>
+            <summary>Tracks</summary>
+            <ol><li>AI Radio Night Flow</li><li>Midnight Glass Reflections</li><li>Midnight Glass Reflections</li><li>Steel Pulse Avenue</li><li>Steel Pulse Avenue</li><li>Smoke Between Us</li><li>Smoke Between Us</li><li>Drift in Blue Time</li><li>Drift in Blue Time</li><li>AI Radio Signature Pulse (1)</li><li>Heat Over Calle Azul</li><li>Heat Over Calle Azul</li><li>Between Signals</li><li>Between Signals</li><li>Neon Between Us</li><li>Neon Between Us</li><li>Edges That Don’t Resolve</li><li>Edges That Don’t Resolve</li><li>The City Breathes Back</li><li>The City Breathes Back</li><li>After the Noise Settles</li><li>After the Noise Settles</li><li>AI Radio Signature Pulse</li><li>When the Room Goes Quiet</li><li>When the Room Goes Quiet</li></ol>
+          </details>
+        </div>
+      </article>
+      <article>
+        <img class="episode-cover" src="covers/07-a-irish-folk-grace-omalley-the-sea-and-the-crown.jpg" alt="">
+        <div>
+          <h2>07 - Irish Folk - Grace O’Malley – The Sea and the Crown</h2>
+          <p>Eine musikalische Geschichte über Grace O’Malley – Seefahrerin, Machtfigur und Strategin im Irland des 16. Jahrhunderts.
+
+Zwischen Küste und Krone entfaltet sich ein Leben im Spannungsfeld von Handel, Konflikt und politischem Umbruch.</p>
+          <audio controls preload="none" src="episodes/07-a-irish-folk-grace-omalley-the-sea-and-the-crown.mp3"></audio>
+          <details>
+            <summary>Tracks</summary>
+            <ol><li>Grace O&#x27;Malley Jingle 01</li><li>Intro</li><li>The Salt in Her Blood</li><li>1-2</li><li>Queen of the Western Tides</li><li>2-3</li><li>Fire on the Atlantic Wind</li><li>Grace O&#x27;Malley Jingle 03</li><li>3-4</li><li>The Meeting of Queens</li><li>4-5</li><li>The Tide Remembers Her Name</li><li>Outro</li><li>Grace O&#x27;Malley Jingle 03 (1)</li><li>Echoes of Clew Bay</li><li>The Long Oar</li><li>Salt and Stone</li><li>Gan Ainm, Gan Choróin</li><li>Farraige Gan Deireadh</li><li>Grace O&#x27;Malley Jingle 03</li><li>Echoes of Clew Bay</li><li>AI Radio Jingle deutsch-2</li><li>The Long Oar</li></ol>
+          </details>
+        </div>
+      </article>
+      <article>
+        <img class="episode-cover" src="covers/06-a-morning-soul.jpg" alt="">
+        <div>
+          <h2>06 - Morning Soul</h2>
+          <p>Wärme, Groove und Stimme: ein eleganter Start in den Morgen mit klassischer und moderner Soul-Energie.</p>
+          <audio controls preload="none" src="episodes/06-a-morning-soul.mp3"></audio>
+          <details>
+            <summary>Tracks</summary>
+            <ol><li>AI Radio Soul ID</li><li>Light Day</li><li>Light Day</li><li>Letting Go Slow</li><li>Letting Go Slow</li><li>I Rise Again</li><li>I Rise Again</li><li>Between Maybe and Might</li><li>Between Maybe and Might</li><li>AI Radio Soul ID</li><li>Second Run</li><li>Second Run</li><li>We Still Know</li><li>We Still Know</li><li>Here We Are Again</li><li>Here We Are Again</li><li>Almost Said It</li><li>Almost Said It</li><li>Healing Slow</li><li>Healing Slow</li><li>AI Radio Soul ID (1)</li><li>Right Here, Right Now</li><li>Right Here, Right Now</li><li>Almost Said It</li><li>Between Maybe and Might</li><li>Midnight Wire Dub (1)</li><li>Midnight Wire Dub (1)</li></ol>
+          </details>
+        </div>
+      </article>
+      <article>
+        <img class="episode-cover" src="covers/05-a-indie-northern-skies.jpg" alt="">
+        <div>
+          <h2>05 - Indie - Northern Skies</h2>
+          <p>Gitarren, Haltung und Leichtigkeit. Ein nachmittäglicher Indie-Block, der nicht beschwert, sondern trägt.</p>
+          <audio controls preload="none" src="episodes/05-a-indie-northern-skies.mp3"></audio>
+          <details>
+            <summary>Tracks</summary>
+            <ol><li>Indie Jingle-2 (1)</li><li>Tiny Lights in Ordinary Days</li><li>Tiny Lights in Ordinary Days</li><li>Soft Collisions</li><li>Soft Collisions</li><li>Breaking Patterns Quietly</li><li>Breaking Patterns Quietly</li><li>Indie Jingle</li><li>Neon Without Warmth</li><li>Neon Without Warmth</li><li>2-17 AM</li><li>2 17 AM</li><li>Signal - Noise</li><li>Signal   Noise</li><li>Indie Jingle-2</li><li>Almost Stayed</li><li>Almost Stayed</li><li>Good Enough to Stay</li><li>Good Enough to Stay</li><li>Start Anyway</li><li>Start Anyway</li><li>What Still Remains</li><li>What Still Remains</li><li>Indie Jingle (1)</li><li>2 17 AM</li><li>Good Enough to Stay</li><li>Signal   Noise</li><li>Start Anyway</li><li>Blue Hour Dub</li><li>Blue Hour Dub</li><li>Blue Hour Dub</li></ol>
+          </details>
+        </div>
+      </article>
+      <article>
+        <img class="episode-cover" src="covers/04-a-electronic-depths.jpg" alt="">
+        <div>
+          <h2>04 - Electronic Depths</h2>
+          <p>Zehn elektronische Stücke zwischen Tiefe, Reduktion und klanglicher Weite – für Hörer, die Musik nicht nur nebenbei hören wollen.</p>
+          <audio controls preload="none" src="episodes/04-a-electronic-depths.mp3"></audio>
+          <details>
+            <summary>Tracks</summary>
+            <ol><li>AI-Radio Jingle-short</li><li>Orbital Resonance</li><li>Orbital Resonance I</li><li>Deep Sky Silence</li><li>Neon Horizon</li><li>Neon Horizon</li><li>Sequential Trancefield</li><li>Echoes of Tomorrow</li><li>Echoes of Tomorrow</li><li>Silent Interval</li><li>Silent Interval</li><li>Crystal Circuitry</li><li>Fractured Signal</li><li>Fractured Signal</li><li>Final Phase Alignment</li><li>ed-Outro</li><li>Desert Signal</li><li>Blue Hour Dub (1)</li><li>Blue Hour Dub (1)</li></ol>
+          </details>
+        </div>
+      </article>
+      <article>
+        <img class="episode-cover" src="covers/03-a-open-road-country.jpg" alt="">
+        <div>
+          <h2>03 - Open Road Country</h2>
+          <p>Erdige Songs, klare Melodien und erzählerische Nähe. Country passt ausgezeichnet in den offenen, hellen Vormittag.</p>
+          <audio controls preload="none" src="episodes/03-a-open-road-country.mp3"></audio>
+          <details>
+            <summary>Tracks</summary>
+            <ol><li>Saddle Up with AI Radio</li><li>Saturday Night at the Lucky Spur</li><li>Summer Highway Radio</li><li>The Last Light in Dry Creek</li><li>The Station Where Time Waits</li><li>Two Hats in the Same Wind</li><li>Westward With the Wind</li><li>Dust on the Horizon</li><li>Eight Seconds of Glory</li><li>Front Porch AI Radio</li><li>Endless Prairie Sky</li><li>First Drive Across the Range</li><li>Hammer and a Helping Hand</li><li>Hands That Built This Land</li><li>Letter on the Kitchen Table</li><li>AI Radio Country Flows (1)</li><li>Midnight Mile Between Us</li><li>Midnight Wire Dub</li></ol>
+          </details>
+        </div>
+      </article>
+      <article>
+        <img class="episode-cover" src="covers/02-a-pure-metal.jpg" alt="">
+        <div>
+          <h2>02 - Pure Metal</h2>
+          <p>Verschiedene Facetten des Metal vom Feinsten</p>
+          <audio controls preload="none" src="episodes/02-a-pure-metal.mp3"></audio>
+          <details>
+            <summary>Tracks</summary>
+            <ol><li>Metal jingle (1)</li><li>Ashes of the Final Dawn</li><li>Black Flag on the Burning Sea</li><li>Metal jingle (2)</li><li>Dust of the Last Horizon</li><li>Echoes of the Sunken Empire</li><li>Empire of the Machine Mind</li><li>Metal jingle (3)</li><li>Fire of the Ancient Dragon</li><li>Forge of the Star Gods</li><li>Metal jingle</li><li>Last Man on the Battlefield</li><li>Paradox Engine</li><li>Metal jingle</li></ol>
+          </details>
+        </div>
+      </article>
+      <article>
+        <img class="episode-cover" src="covers/01-b-weltklang.jpg" alt="">
+        <div>
+          <h2>01 - Weltklang</h2>
+          <p>Musik aus unterschiedlichen kulturellen Räumen, sorgfältig kuratiert und ideal für die frühen, offenen Stunden des Tages.</p>
+          <audio controls preload="none" src="episodes/01-b-weltklang.mp3"></audio>
+          <details>
+            <summary>Tracks</summary>
+            <ol><li>AI Radio Jingle deutsch</li><li>cold-sugar</li><li>Alaska  Raven Borrowed the Light</li><li>Andalusien  Donde arde la tierra</li><li>Australia  Where the Road Keeps Breathing</li><li>AI-Radio Jingle-short</li><li>Brasil  O Redemoinho do Saci</li><li>Brasilien  Entre Sol e Sorriso</li><li>Chile  Las Vueltas de Pedro Urdemales</li><li>AI-Radio Jingle-short</li><li>China-Ost  风从江南来</li><li>China-West  风向西走</li><li>Fiji Islands  Where the Tide Knows Your Name</li><li>AI Radio Jingle deutsch-2</li><li>Israel  Ben Even ve-Or</li><li>Italien  Sotto lo stesso sole</li><li>Japan  風と間（Kaze to Ma）</li><li>Kroatien  Gdje srce ostaje</li><li>AI-Radio Jingle</li><li>Farraige Gan Deireadh</li><li>Signal Delay Dub (1)</li><li>Signal Delay Dub (1)</li><li>Signal Delay Dub (1)</li><li>Signal Delay Dub (1)</li><li>Signal Delay Dub (1)</li></ol>
+          </details>
+        </div>
+      </article>
+  </main>
+</body>
+</html>

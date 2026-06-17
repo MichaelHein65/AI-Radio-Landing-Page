@@ -1,0 +1,246 @@
+<?xml version='1.0' encoding='utf-8'?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+  <channel>
+    <title>Mike's AI Radio</title>
+    <link>https://ai-radio.cc/podcast/ai-radio</link>
+    <description>Mike's AI Radio ist ein kuratierter Musikpodcast mit KI-produzierten Radiosendungen: Genre-Reisen von Weltmusik, Soul, Jazz und Blues bis Metal, Reggae, Electronic, Country, Rap und Balkan Disco. Jede Episode verbindet Musik, Atmosphäre und Moderationsdramaturgie zu einer eigenständigen Sendung.</description>
+    <language>de-de</language>
+    <lastBuildDate>Wed, 10 Jun 2026 21:11:45 +0000</lastBuildDate>
+    <atom:link href="https://ai-radio.cc/podcast/ai-radio/feed.xml" rel="self" type="application/rss+xml" />
+    <itunes:author>Michael Hein</itunes:author>
+    <itunes:explicit>false</itunes:explicit>
+    <itunes:category text="Music" />
+    <image>
+      <url>https://ai-radio.cc/podcast/ai-radio/cover.jpg</url>
+      <title>Mike's AI Radio</title>
+      <link>https://ai-radio.cc/podcast/ai-radio</link>
+    </image>
+    <itunes:image href="https://ai-radio.cc/podcast/ai-radio/cover.jpg" />
+    <item>
+      <title>17 - Chanson Électrique</title>
+      <description>Französische Lieder zwischen Zärtlichkeit, Haltung und Schatten</description>
+      <pubDate>Sun, 17 May 2026 06:00:00 +0000</pubDate>
+      <guid isPermaLink="false">chanson_lectrique</guid>
+      <itunes:duration>57:30</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>17</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <enclosure url="https://ai-radio.cc/podcast/ai-radio/episodes/017a-chanson-electrique.mp3" length="69007283" type="audio/mpeg" />
+    </item>
+    <item>
+      <title>16 - Saxophone Tunes</title>
+      <description>Eine instrumentale Reise durch die vielen Gesichter des Saxophons: von klassischer Eleganz über Big Band, Jazz, Blues und Funk bis zu Neon-Pop, Balkan-Brass und elektronischen Klangräumen. Im Mittelpunkt steht immer das Saxophon — mal samtig, mal wild, mal melancholisch, mal messerscharf.</description>
+      <pubDate>Sat, 16 May 2026 06:00:00 +0000</pubDate>
+      <guid isPermaLink="false">saxophone_tunes</guid>
+      <itunes:duration>56:13</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>16</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <enclosure url="https://ai-radio.cc/podcast/ai-radio/episodes/16-a-saxophone-tunes.mp3" length="67462685" type="audio/mpeg" />
+    </item>
+    <item>
+      <title>15 - R&amp;B Velvet after midnight</title>
+      <description>Eine elegante nächtliche R&amp;B-Reise durch Neonlicht, Regen, späte Gespräche und die leise Melancholie urbaner Nähe.
+Zwischen Neo Soul, Atmospheric R&amp;B und jazzigen Soli entfalten sich zehn Songs wie Szenen eines Films: warm, luxuriös, verletzlich und bittersüß bis zum ersten Licht des Morgens.</description>
+      <pubDate>Fri, 15 May 2026 06:00:00 +0000</pubDate>
+      <guid isPermaLink="false">r_b_velvet_after_midnight</guid>
+      <itunes:duration>58:06</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>15</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:image href="https://ai-radio.cc/podcast/ai-radio/covers/15-a-r-b-velvet-after-midnight.jpg" />
+      <enclosure url="https://ai-radio.cc/podcast/ai-radio/episodes/15-a-r-b-velvet-after-midnight.mp3" length="69716749" type="audio/mpeg" />
+    </item>
+    <item>
+      <title>14 - Balkan Disco</title>
+      <description>Kroatische Hooks, rasende Bläser und Clubbeats bis zum Morgengrauen — AI Radio tanzt, als gäbe es keine Sperrstunde.</description>
+      <pubDate>Thu, 14 May 2026 06:00:00 +0000</pubDate>
+      <guid isPermaLink="false">balkan_disco</guid>
+      <itunes:duration>1:01:06</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>14</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:image href="https://ai-radio.cc/podcast/ai-radio/covers/14-a-balkan-disco.jpg" />
+      <enclosure url="https://ai-radio.cc/podcast/ai-radio/episodes/14-a-balkan-disco.mp3" length="73315887" type="audio/mpeg" />
+    </item>
+    <item>
+      <title>13 - Rap-No Peace in the Signal</title>
+      <description>Zehn politische Rap-Tracks über Krieg, Angst, Macht, Miete, Grenzen, Propaganda und Widerstand. Eine düstere, spitze Sendung über die Frage, wie man in einer lauten, manipulativen Welt den Verstand behält.</description>
+      <pubDate>Wed, 13 May 2026 06:00:00 +0000</pubDate>
+      <guid isPermaLink="false">rap_no_peace_in_the_signal</guid>
+      <itunes:duration>58:19</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>13</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:image href="https://ai-radio.cc/podcast/ai-radio/covers/13-a-rap-no-peace-in-the-signal.jpg" />
+      <enclosure url="https://ai-radio.cc/podcast/ai-radio/episodes/13-a-rap-no-peace-in-the-signal.mp3" length="69983722" type="audio/mpeg" />
+    </item>
+    <item>
+      <title>12 - 70's-Golden Days, Neon Nights</title>
+      <description>Eine musikalische Reise durch den Glanz, die Freiheit, die Romantik und die Zukunftslust der 70er- und 80er-Jahre — neu gestaltet im Geist dieser großen Pop-Epochen.</description>
+      <pubDate>Tue, 12 May 2026 06:00:00 +0000</pubDate>
+      <guid isPermaLink="false">golden_days_neon_nights</guid>
+      <itunes:duration>54:51</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>12</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:image href="https://ai-radio.cc/podcast/ai-radio/covers/12-a-70-s-golden-days-neon-nights.jpg" />
+      <enclosure url="https://ai-radio.cc/podcast/ai-radio/episodes/12-a-70-s-golden-days-neon-nights.mp3" length="65829210" type="audio/mpeg" />
+    </item>
+    <item>
+      <title>11 - Reggae - Kingston Skies</title>
+      <description>**Kingston Skies** führt durch zehn Facetten des Reggae – von warmem Roots und spiritueller Tiefe über Lovers Rock und Dub bis zu urbaner Reggae Fusion. Die Sendung verbindet Bass, Sonne, Witz und Widerstand zu einer musikalischen Reise, die zugleich entspannt, klug und voller Bewegung ist.</description>
+      <pubDate>Mon, 11 May 2026 06:00:00 +0000</pubDate>
+      <guid isPermaLink="false">07_kingston_skies_reggae</guid>
+      <itunes:duration>58:31</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>11</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:image href="https://ai-radio.cc/podcast/ai-radio/covers/11-a-reggae-kingston-skies.jpg" />
+      <enclosure url="https://ai-radio.cc/podcast/ai-radio/episodes/11-a-reggae-kingston-skies.mp3" length="70227702" type="audio/mpeg" />
+    </item>
+    <item>
+      <title>10 - Barock - Licht, Leid und Erlösung - Sakrale Musik</title>
+      <description>Zwischen Erde und Ewigkeit führt durch die großen Ausdrucksformen geistlicher Musik – von Klage und Passion bis zu Trost, Gericht und Verklärung. Eine musikalische Reise durch sakrale Klangwelten des Barock und ihre Vollendung</description>
+      <pubDate>Sun, 10 May 2026 06:00:00 +0000</pubDate>
+      <guid isPermaLink="false">19_licht_leid_und_erloesung_sakrale_barock_musik</guid>
+      <itunes:duration>56:21</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>10</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:image href="https://ai-radio.cc/podcast/ai-radio/covers/10-a-barock-licht-leid-und-erlosung-sakrale-musik.jpg" />
+      <enclosure url="https://ai-radio.cc/podcast/ai-radio/episodes/10-a-barock-licht-leid-und-erlosung-sakrale-musik.mp3" length="67619720" type="audio/mpeg" />
+    </item>
+    <item>
+      <title>09 - Blues at five</title>
+      <description>Eine Reise durch viele Facetten des Blues – von staubigem Delta Blues über elektrischen Chicago-Sound bis zu Soul, Swamp und modernem Noir. Die Sendung verbindet klassische Blues-Traditionen mit neuen KI-komponierten Stücken, die von Nacht, Arbeit, Sehnsucht, Reue und einem Rest von Hoffnung erzählen.</description>
+      <pubDate>Sat, 09 May 2026 06:00:00 +0000</pubDate>
+      <guid isPermaLink="false">17_blues_at_five</guid>
+      <itunes:duration>55:10</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>9</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:image href="https://ai-radio.cc/podcast/ai-radio/covers/09-a-blues-at-five.jpg" />
+      <enclosure url="https://ai-radio.cc/podcast/ai-radio/episodes/09-a-blues-at-five.mp3" length="66201701" type="audio/mpeg" />
+    </item>
+    <item>
+      <title>08 - Jazz - Blue Structures</title>
+      <description>Eine Stunde Jazz jenseits von Klischees.
+Von kühlen, nächtlichen Klangräumen über rhythmische Energie bis hin zu experimentellen Grenzbereichen und zurück in klare Formen.
+Diese Sendung verbindet klassische Stilrichtungen mit modernen Einflüssen und zeigt Jazz als lebendige, sich ständig verändernde Sprache.
+
+Konzentriert, atmosphärisch und bewusst kuratiert.</description>
+      <pubDate>Fri, 08 May 2026 06:00:00 +0000</pubDate>
+      <guid isPermaLink="false">20_blue_structures_eine_reise_durch_den_jazz</guid>
+      <itunes:duration>57:15</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>8</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:image href="https://ai-radio.cc/podcast/ai-radio/covers/08-a-jazz-blue-structures.jpg" />
+      <enclosure url="https://ai-radio.cc/podcast/ai-radio/episodes/08-a-jazz-blue-structures.mp3" length="68703718" type="audio/mpeg" />
+    </item>
+    <item>
+      <title>07 - Irish Folk - Grace O’Malley – The Sea and the Crown</title>
+      <description>Eine musikalische Geschichte über Grace O’Malley – Seefahrerin, Machtfigur und Strategin im Irland des 16. Jahrhunderts.
+
+Zwischen Küste und Krone entfaltet sich ein Leben im Spannungsfeld von Handel, Konflikt und politischem Umbruch.</description>
+      <pubDate>Thu, 07 May 2026 06:00:00 +0000</pubDate>
+      <guid isPermaLink="false">18_granuaile_the_sea_and_the_crown</guid>
+      <itunes:duration>55:54</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>7</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:image href="https://ai-radio.cc/podcast/ai-radio/covers/07-a-irish-folk-grace-omalley-the-sea-and-the-crown.jpg" />
+      <enclosure url="https://ai-radio.cc/podcast/ai-radio/episodes/07-a-irish-folk-grace-omalley-the-sea-and-the-crown.mp3" length="67071675" type="audio/mpeg" />
+    </item>
+    <item>
+      <title>06 - Morning Soul</title>
+      <description>Wärme, Groove und Stimme: ein eleganter Start in den Morgen mit klassischer und moderner Soul-Energie.</description>
+      <pubDate>Wed, 06 May 2026 06:00:00 +0000</pubDate>
+      <guid isPermaLink="false">08_morning_soul</guid>
+      <itunes:duration>55:42</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>6</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:image href="https://ai-radio.cc/podcast/ai-radio/covers/06-a-morning-soul.jpg" />
+      <enclosure url="https://ai-radio.cc/podcast/ai-radio/episodes/06-a-morning-soul.mp3" length="66841177" type="audio/mpeg" />
+    </item>
+    <item>
+      <title>05 - Indie - Northern Skies</title>
+      <description>Gitarren, Haltung und Leichtigkeit. Ein nachmittäglicher Indie-Block, der nicht beschwert, sondern trägt.</description>
+      <pubDate>Tue, 05 May 2026 06:00:00 +0000</pubDate>
+      <guid isPermaLink="false">14_northern_skies</guid>
+      <itunes:duration>56:15</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>5</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:image href="https://ai-radio.cc/podcast/ai-radio/covers/05-a-indie-northern-skies.jpg" />
+      <enclosure url="https://ai-radio.cc/podcast/ai-radio/episodes/05-a-indie-northern-skies.mp3" length="67508354" type="audio/mpeg" />
+    </item>
+    <item>
+      <title>04 - Electronic Depths</title>
+      <description>Zehn elektronische Stücke zwischen Tiefe, Reduktion und klanglicher Weite – für Hörer, die Musik nicht nur nebenbei hören wollen.</description>
+      <pubDate>Mon, 04 May 2026 06:00:00 +0000</pubDate>
+      <guid isPermaLink="false">01_electronic_depths</guid>
+      <itunes:duration>56:33</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>4</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:image href="https://ai-radio.cc/podcast/ai-radio/covers/04-a-electronic-depths.jpg" />
+      <enclosure url="https://ai-radio.cc/podcast/ai-radio/episodes/04-a-electronic-depths.mp3" length="67862570" type="audio/mpeg" />
+    </item>
+    <item>
+      <title>03 - Open Road Country</title>
+      <description>Erdige Songs, klare Melodien und erzählerische Nähe. Country passt ausgezeichnet in den offenen, hellen Vormittag.</description>
+      <pubDate>Sun, 03 May 2026 06:00:00 +0000</pubDate>
+      <guid isPermaLink="false">11_open_road_country</guid>
+      <itunes:duration>57:11</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>3</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:image href="https://ai-radio.cc/podcast/ai-radio/covers/03-a-open-road-country.jpg" />
+      <enclosure url="https://ai-radio.cc/podcast/ai-radio/episodes/03-a-open-road-country.mp3" length="68617509" type="audio/mpeg" />
+    </item>
+    <item>
+      <title>02 - Pure Metal</title>
+      <description>Verschiedene Facetten des Metal vom Feinsten</description>
+      <pubDate>Sat, 02 May 2026 06:00:00 +0000</pubDate>
+      <guid isPermaLink="false">pure_metal</guid>
+      <itunes:duration>54:56</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>2</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:image href="https://ai-radio.cc/podcast/ai-radio/covers/02-a-pure-metal.jpg" />
+      <enclosure url="https://ai-radio.cc/podcast/ai-radio/episodes/02-a-pure-metal.mp3" length="65921665" type="audio/mpeg" />
+    </item>
+    <item>
+      <title>01 - Weltklang</title>
+      <description>Musik aus unterschiedlichen kulturellen Räumen, sorgfältig kuratiert und ideal für die frühen, offenen Stunden des Tages.</description>
+      <pubDate>Fri, 01 May 2026 06:00:00 +0000</pubDate>
+      <guid isPermaLink="false">03_weltklang</guid>
+      <itunes:duration>55:42</itunes:duration>
+      <itunes:explicit>false</itunes:explicit>
+      <itunes:season>1</itunes:season>
+      <itunes:episode>1</itunes:episode>
+      <itunes:episodeType>full</itunes:episodeType>
+      <itunes:image href="https://ai-radio.cc/podcast/ai-radio/covers/01-b-weltklang.jpg" />
+      <enclosure url="https://ai-radio.cc/podcast/ai-radio/episodes/01-b-weltklang.mp3" length="66849533" type="audio/mpeg" />
+    </item>
+  </channel>
+</rss>

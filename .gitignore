@@ -1,5 +1,6 @@
 node_modules/
 dist/
+public/podcast/ai-radio/episodes/
 artifacts/
 .DS_Store
 *.log
