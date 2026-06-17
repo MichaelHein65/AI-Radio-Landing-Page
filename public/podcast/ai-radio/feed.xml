@@ -26,6 +26,7 @@
       <itunes:season>1</itunes:season>
       <itunes:episode>17</itunes:episode>
       <itunes:episodeType>full</itunes:episodeType>
+      <itunes:image href="https://ai-radio.cc/podcast/ai-radio/covers/17-a-chanson-electrique.png" />
       <enclosure url="https://ai-radio.cc/podcast/ai-radio/episodes/017a-chanson-electrique.mp3" length="69007283" type="audio/mpeg" />
     </item>
     <item>
@@ -38,6 +39,7 @@
       <itunes:season>1</itunes:season>
       <itunes:episode>16</itunes:episode>
       <itunes:episodeType>full</itunes:episodeType>
+      <itunes:image href="https://ai-radio.cc/podcast/ai-radio/covers/16-a-saxophone-tunes.jpg" />
       <enclosure url="https://ai-radio.cc/podcast/ai-radio/episodes/16-a-saxophone-tunes.mp3" length="67462685" type="audio/mpeg" />
     </item>
     <item>
