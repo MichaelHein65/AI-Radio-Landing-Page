@@ -704,10 +704,12 @@ async function togglePlayback() {
     state.streamRetryCount = 0;
     clearStreamRetryTimer();
     updatePlaybackUi();
+    logPlayerEvent("play-attempt", { reason: "play" });
     setAudioStreamSource("play", { force: true });
     await state.audio.play();
     state.isPlaying = true;
   } catch {
+    logPlayerEvent("play-failed", { reason: "play" });
     state.playbackRequested = false;
     state.isPlaying = false;
   } finally {
@@ -968,6 +970,7 @@ function setupAudioEventHandlers() {
     clearStreamRetryTimer();
     state.playbackStarting = false;
     state.isPlaying = true;
+    logPlayerEvent("playing");
     updatePlaybackUi();
     updateMediaSession();
   });
@@ -978,6 +981,7 @@ function setupAudioEventHandlers() {
     if (!state.playbackRequested) {
       clearStreamRetryTimer();
       state.isPlaying = false;
+      logPlayerEvent("pause");
       updatePlaybackUi();
       updateMediaSession();
     }
@@ -992,6 +996,7 @@ function setupAudioEventHandlers() {
 function scheduleStreamReconnect(reason, delayMs) {
   if (!state.playbackRequested) return;
   if (state.streamRetryTimer) return;
+  logPlayerEvent(`audio-${reason}`, { reason });
   state.streamRetryTimer = window.setTimeout(() => {
     state.streamRetryTimer = 0;
     restartStream(reason);
@@ -1018,6 +1023,7 @@ async function restartStream(reason) {
   state.playbackStarting = true;
   state.streamRetryCount += 1;
   updatePlaybackUi();
+  logPlayerEvent("reconnect-attempt", { reason });
   setAudioStreamSource(`retry-${reason}-${state.streamRetryCount}`, { force: true });
 
   try {
@@ -1025,6 +1031,7 @@ async function restartStream(reason) {
     state.isPlaying = true;
   } catch {
     state.isPlaying = false;
+    logPlayerEvent("reconnect-failed", { reason });
     scheduleStreamReconnect("play-failed", 3500);
   } finally {
     state.playbackStarting = false;
@@ -1055,6 +1062,31 @@ function stopCurrentAudioStream() {
   state.audio.pause();
   state.audio.removeAttribute("src");
   state.audio.load();
+}
+
+function logPlayerEvent(event, details = {}) {
+  if (isLocalPreview()) return;
+  const payload = {
+    event,
+    session_id: state.streamSessionId,
+    retry_count: state.streamRetryCount,
+    is_playing: state.isPlaying,
+    playback_starting: state.playbackStarting,
+    ready_state: state.audio.readyState,
+    network_state: state.audio.networkState,
+    reason: details.reason || ""
+  };
+  const body = JSON.stringify(payload);
+  if (navigator.sendBeacon) {
+    navigator.sendBeacon("/api/player-event", new Blob([body], { type: "application/json" }));
+    return;
+  }
+  fetch("/api/player-event", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body,
+    keepalive: true
+  }).catch(() => {});
 }
 
 function createStreamSessionId() {
