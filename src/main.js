@@ -51,6 +51,12 @@ const state = {
   carouselDragProgress: 0,
   carouselAnimationFrame: 0,
   carouselReturnTimer: 0,
+  playbackRequested: false,
+  streamRetryCount: 0,
+  streamRetryTimer: 0,
+  streamSessionId: "",
+  lastStreamRestartAt: 0,
+  audioHandlersBound: false,
   mediaSessionKey: "",
   audio: new Audio(),
   sphere: null
@@ -74,6 +80,8 @@ async function init() {
   state.config = await response.json();
   state.selectedDayId = weekdayOrder[new Date().getDay()];
   state.selectedIndex = getCurrentSlotIndex();
+  state.streamSessionId = createStreamSessionId();
+  setupAudioEventHandlers();
   applyTheme();
   render();
   startTicks();
@@ -668,6 +676,8 @@ function getCarouselPose(relative) {
 
 async function togglePlayback() {
   if (state.isPlaying) {
+    state.playbackRequested = false;
+    clearStreamRetryTimer();
     state.audio.pause();
     state.isPlaying = false;
     updateMediaSession();
@@ -676,9 +686,14 @@ async function togglePlayback() {
   }
 
   try {
+    state.playbackRequested = true;
+    state.streamRetryCount = 0;
+    clearStreamRetryTimer();
+    setAudioStreamSource("play", { force: true, load: true });
     await state.audio.play();
     state.isPlaying = true;
   } catch {
+    state.playbackRequested = false;
     state.isPlaying = false;
   }
   updateMediaSession();
@@ -922,13 +937,125 @@ function isLocalPreview() {
 }
 
 function syncAudioElement() {
-  const nextSrc = new URL(getStreamUrl(state.config.station.streamUrl), window.location.href).href;
-  if (state.audio.src !== nextSrc) {
-    state.audio.src = nextSrc;
+  const baseUrl = new URL(getStreamUrl(state.config.station.streamUrl), window.location.href);
+  const currentUrl = state.audio.src ? new URL(state.audio.src, window.location.href) : null;
+  const isSameStream = currentUrl && currentUrl.origin === baseUrl.origin && currentUrl.pathname === baseUrl.pathname;
+  if (!isSameStream) {
+    state.audio.src = baseUrl.href;
   }
   state.audio.preload = "none";
   state.audio.volume = state.volume;
   state.audio.muted = false;
+}
+
+function setupAudioEventHandlers() {
+  if (state.audioHandlersBound) return;
+  state.audioHandlersBound = true;
+  state.audio.preload = "none";
+
+  state.audio.addEventListener("playing", () => {
+    clearStreamRetryTimer();
+    state.isPlaying = true;
+    updatePlaybackUi();
+    updateMediaSession();
+  });
+  state.audio.addEventListener("canplay", clearStreamRetryTimer);
+  state.audio.addEventListener("canplaythrough", clearStreamRetryTimer);
+
+  state.audio.addEventListener("pause", () => {
+    if (!state.playbackRequested) {
+      clearStreamRetryTimer();
+      state.isPlaying = false;
+      updatePlaybackUi();
+      updateMediaSession();
+    }
+  });
+
+  state.audio.addEventListener("waiting", () => scheduleStreamReconnect("waiting", 2500));
+  state.audio.addEventListener("stalled", () => scheduleStreamReconnect("stalled", 1200));
+  state.audio.addEventListener("error", () => scheduleStreamReconnect("error", 400));
+  state.audio.addEventListener("ended", () => scheduleStreamReconnect("ended", 400));
+}
+
+function scheduleStreamReconnect(reason, delayMs) {
+  if (!state.playbackRequested) return;
+  if (state.streamRetryTimer) return;
+  state.streamRetryTimer = window.setTimeout(() => {
+    state.streamRetryTimer = 0;
+    restartStream(reason);
+  }, delayMs);
+}
+
+function clearStreamRetryTimer() {
+  if (!state.streamRetryTimer) return;
+  window.clearTimeout(state.streamRetryTimer);
+  state.streamRetryTimer = 0;
+}
+
+async function restartStream(reason) {
+  if (!state.playbackRequested) return;
+
+  const now = Date.now();
+  const minGapMs = 3500;
+  if (now - state.lastStreamRestartAt < minGapMs) {
+    scheduleStreamReconnect(reason, minGapMs - (now - state.lastStreamRestartAt));
+    return;
+  }
+
+  state.lastStreamRestartAt = now;
+  state.streamRetryCount += 1;
+  setAudioStreamSource(`retry-${reason}-${state.streamRetryCount}`, { force: true, load: true });
+
+  try {
+    await state.audio.play();
+    state.isPlaying = true;
+  } catch {
+    state.isPlaying = false;
+    scheduleStreamReconnect("play-failed", 3500);
+  }
+  updatePlaybackUi();
+  updateMediaSession();
+}
+
+function setAudioStreamSource(reason, options = {}) {
+  const baseUrl = new URL(getStreamUrl(state.config.station.streamUrl), window.location.href);
+  baseUrl.searchParams.set("ts", String(Date.now()));
+  baseUrl.searchParams.set("sid", state.streamSessionId || createStreamSessionId());
+  baseUrl.searchParams.set("rv", String(state.streamRetryCount + 1));
+  baseUrl.searchParams.set("reason", reason);
+  const nextSrc = baseUrl.href;
+
+  if (!options.force && state.audio.src === nextSrc) return;
+  if (options.force) {
+    state.audio.pause();
+    state.audio.removeAttribute("src");
+    state.audio.load();
+  }
+  state.audio.src = nextSrc;
+  state.audio.preload = "none";
+  state.audio.volume = state.volume;
+  state.audio.muted = false;
+  if (options.load) {
+    state.audio.load();
+  }
+}
+
+function createStreamSessionId() {
+  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function updatePlaybackUi() {
+  const button = document.querySelector("#playToggle");
+  const status = document.querySelector("#streamStatus");
+  if (status) {
+    status.textContent = state.isPlaying ? "Verbunden" : "Bereit";
+  }
+  if (!button) return;
+  button.innerHTML = `
+    <i data-lucide="${state.isPlaying ? "pause" : "play"}"></i>
+    <span>${state.isPlaying ? "Pause" : "Start"}</span>
+  `;
+  createIcons({ icons: iconSet });
 }
 
 function updateMediaSession() {
