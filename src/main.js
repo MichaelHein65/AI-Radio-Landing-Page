@@ -693,7 +693,7 @@ async function togglePlayback() {
   }
 
   const now = Date.now();
-  if (now - state.lastPlaybackStartAttemptAt < 1800) {
+  if (now - state.lastPlaybackStartAttemptAt < 5000) {
     return;
   }
   state.lastPlaybackStartAttemptAt = now;
