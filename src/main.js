@@ -51,10 +51,12 @@ const state = {
   carouselDragProgress: 0,
   carouselAnimationFrame: 0,
   carouselReturnTimer: 0,
+  playbackStarting: false,
   playbackRequested: false,
   streamRetryCount: 0,
   streamRetryTimer: 0,
   streamSessionId: "",
+  lastPlaybackStartAttemptAt: 0,
   lastStreamRestartAt: 0,
   audioHandlersBound: false,
   mediaSessionKey: "",
@@ -128,9 +130,9 @@ function render() {
                 <small id="heroNowMeta">${formatHourRange(activeSlot.hour)} · ${escapeHtml(activeSlot.show.subtitle)}</small>
               </div>
               <div class="player-actions">
-                <button class="primary-action" id="playToggle" type="button">
+                <button class="primary-action" id="playToggle" type="button" ${state.playbackStarting ? "disabled" : ""}>
                   <i data-lucide="${state.isPlaying ? "pause" : "play"}"></i>
-                  <span>${state.isPlaying ? "Pause" : "Start"}</span>
+                  <span>${state.playbackStarting ? "Verbinde" : state.isPlaying ? "Pause" : "Start"}</span>
                 </button>
               </div>
             </div>
@@ -675,26 +677,41 @@ function getCarouselPose(relative) {
 }
 
 async function togglePlayback() {
+  if (state.playbackStarting) {
+    return;
+  }
+
   if (state.isPlaying) {
+    state.playbackStarting = false;
     state.playbackRequested = false;
     clearStreamRetryTimer();
-    state.audio.pause();
+    stopCurrentAudioStream();
     state.isPlaying = false;
     updateMediaSession();
     render();
     return;
   }
 
+  const now = Date.now();
+  if (now - state.lastPlaybackStartAttemptAt < 1800) {
+    return;
+  }
+  state.lastPlaybackStartAttemptAt = now;
+
   try {
+    state.playbackStarting = true;
     state.playbackRequested = true;
     state.streamRetryCount = 0;
     clearStreamRetryTimer();
-    setAudioStreamSource("play", { force: true, load: true });
+    updatePlaybackUi();
+    setAudioStreamSource("play", { force: true });
     await state.audio.play();
     state.isPlaying = true;
   } catch {
     state.playbackRequested = false;
     state.isPlaying = false;
+  } finally {
+    state.playbackStarting = false;
   }
   updateMediaSession();
   render();
@@ -937,12 +954,6 @@ function isLocalPreview() {
 }
 
 function syncAudioElement() {
-  const baseUrl = new URL(getStreamUrl(state.config.station.streamUrl), window.location.href);
-  const currentUrl = state.audio.src ? new URL(state.audio.src, window.location.href) : null;
-  const isSameStream = currentUrl && currentUrl.origin === baseUrl.origin && currentUrl.pathname === baseUrl.pathname;
-  if (!isSameStream) {
-    state.audio.src = baseUrl.href;
-  }
   state.audio.preload = "none";
   state.audio.volume = state.volume;
   state.audio.muted = false;
@@ -955,6 +966,7 @@ function setupAudioEventHandlers() {
 
   state.audio.addEventListener("playing", () => {
     clearStreamRetryTimer();
+    state.playbackStarting = false;
     state.isPlaying = true;
     updatePlaybackUi();
     updateMediaSession();
@@ -993,7 +1005,7 @@ function clearStreamRetryTimer() {
 }
 
 async function restartStream(reason) {
-  if (!state.playbackRequested) return;
+  if (!state.playbackRequested || state.playbackStarting) return;
 
   const now = Date.now();
   const minGapMs = 3500;
@@ -1003,8 +1015,10 @@ async function restartStream(reason) {
   }
 
   state.lastStreamRestartAt = now;
+  state.playbackStarting = true;
   state.streamRetryCount += 1;
-  setAudioStreamSource(`retry-${reason}-${state.streamRetryCount}`, { force: true, load: true });
+  updatePlaybackUi();
+  setAudioStreamSource(`retry-${reason}-${state.streamRetryCount}`, { force: true });
 
   try {
     await state.audio.play();
@@ -1012,6 +1026,8 @@ async function restartStream(reason) {
   } catch {
     state.isPlaying = false;
     scheduleStreamReconnect("play-failed", 3500);
+  } finally {
+    state.playbackStarting = false;
   }
   updatePlaybackUi();
   updateMediaSession();
@@ -1027,17 +1043,18 @@ function setAudioStreamSource(reason, options = {}) {
 
   if (!options.force && state.audio.src === nextSrc) return;
   if (options.force) {
-    state.audio.pause();
-    state.audio.removeAttribute("src");
-    state.audio.load();
+    stopCurrentAudioStream();
   }
   state.audio.src = nextSrc;
   state.audio.preload = "none";
   state.audio.volume = state.volume;
   state.audio.muted = false;
-  if (options.load) {
-    state.audio.load();
-  }
+}
+
+function stopCurrentAudioStream() {
+  state.audio.pause();
+  state.audio.removeAttribute("src");
+  state.audio.load();
 }
 
 function createStreamSessionId() {
@@ -1048,12 +1065,13 @@ function updatePlaybackUi() {
   const button = document.querySelector("#playToggle");
   const status = document.querySelector("#streamStatus");
   if (status) {
-    status.textContent = state.isPlaying ? "Verbunden" : "Bereit";
+    status.textContent = state.playbackStarting ? "Verbinde" : state.isPlaying ? "Verbunden" : "Bereit";
   }
   if (!button) return;
+  button.disabled = state.playbackStarting;
   button.innerHTML = `
     <i data-lucide="${state.isPlaying ? "pause" : "play"}"></i>
-    <span>${state.isPlaying ? "Pause" : "Start"}</span>
+    <span>${state.playbackStarting ? "Verbinde" : state.isPlaying ? "Pause" : "Start"}</span>
   `;
   createIcons({ icons: iconSet });
 }
