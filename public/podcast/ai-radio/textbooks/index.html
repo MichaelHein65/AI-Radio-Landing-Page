@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Mike's AI Radio Textbooks</title>
+  <link rel="stylesheet" href="styles.css?v=20260614-webp">
+</head>
+<body>
+  <main class="app" aria-label="AI Radio Textbook Viewer">
+    <section class="show-carousel" aria-label="Sendungen">
+      <div class="brand">
+        <img src="assets/ai-radio-tiger.webp" alt="" decoding="async">
+        <div>
+          <p>Mike's AI Radio</p>
+          <h1>Textbooks</h1>
+        </div>
+      </div>
+      <div id="showCarousel" class="carousel-track"></div>
+    </section>
+
+    <section id="reader" class="reader" aria-label="Liedtext">
+      <div id="songTrack" class="song-track"></div>
+    </section>
+  </main>
+
+  <script src="textbook-data.js?v=20260614-webp"></script>
+  <script src="app.js?v=20260614-webp"></script>
+</body>
+</html>

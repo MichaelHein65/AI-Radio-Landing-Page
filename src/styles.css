@@ -245,7 +245,14 @@ h3 {
 }
 
 .player-panel small {
+  display: block;
   color: var(--muted);
+}
+
+.player-panel .now-track {
+  margin-top: 0.28rem;
+  color: var(--text);
+  font-weight: 700;
 }
 
 .next-show-strip {

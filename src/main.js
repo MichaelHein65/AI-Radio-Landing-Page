@@ -60,6 +60,8 @@ const state = {
   streamRetryCount: 0,
   streamRetryTimer: 0,
   streamSessionId: "",
+  nowPlaying: null,
+  nowPlayingTimer: 0,
   lastPlaybackStartAttemptAt: 0,
   lastStreamRestartAt: 0,
   audioHandlersBound: false,
@@ -94,6 +96,7 @@ async function init() {
   setupPlayerLock();
   applyTheme();
   render();
+  refreshNowPlaying();
   startTicks();
 }
 
@@ -136,6 +139,7 @@ function render() {
                 <span class="panel-label">Jetzt live</span>
                 <strong id="heroNowTitle">${escapeHtml(activeSlot.show.shortTitle)}</strong>
                 <small id="heroNowMeta">${formatHourRange(activeSlot.hour)} · ${escapeHtml(activeSlot.show.subtitle)}</small>
+                <small class="now-track" id="heroNowTrack">${escapeHtml(getNowPlayingText())}</small>
               </div>
               <div class="player-actions">
                 <button class="primary-action" id="playToggle" type="button" ${state.playbackStarting ? "disabled" : ""}>
@@ -243,7 +247,7 @@ function render() {
           </article>
           <article class="stat-tile">
             <span>Jetzt läuft</span>
-            <strong id="nowPlayingTitle">${escapeHtml(activeSlot.show.shortTitle)}</strong>
+            <strong id="nowPlayingTitle">${escapeHtml(getNowPlayingText())}</strong>
           </article>
           <article class="stat-tile">
             <span>Uhrzeit</span>
@@ -1248,12 +1252,47 @@ function getStreamStatusText() {
   return state.isPlaying ? "Verbunden" : "Bereit";
 }
 
+function getNowPlayingText() {
+  const track = String(state.nowPlaying?.track || "").trim();
+  return track || getActiveSlot().show.shortTitle;
+}
+
+function isNowPlayingFresh(payload) {
+  const updatedTs = Number(payload?.updated_ts || 0);
+  const serverTs = Number(payload?.server_ts || Date.now());
+  return Boolean(updatedTs > 0 && serverTs - updatedTs < 8 * 60 * 1000);
+}
+
+async function refreshNowPlaying() {
+  if (isLocalPreview()) return;
+  try {
+    const response = await fetch("/api/now-playing", { cache: "no-store" });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const payload = await response.json();
+    state.nowPlaying = payload.status === "playing" && isNowPlayingFresh(payload) ? payload : null;
+  } catch {
+    state.nowPlaying = null;
+  }
+  updateNowPlayingUi();
+  updateMediaSession();
+}
+
+function updateNowPlayingUi() {
+  const text = getNowPlayingText();
+  const heroTrack = document.querySelector("#heroNowTrack");
+  if (heroTrack) heroTrack.textContent = text;
+  const nowPlayingTitle = document.querySelector("#nowPlayingTitle");
+  if (nowPlayingTitle) nowPlayingTitle.textContent = text;
+}
+
 function updateMediaSession() {
   if (!state.config) return;
   const station = state.config.station;
   const active = getActiveSlot();
-  const title = active.show.shortTitle || active.show.title || station.name;
-  const artist = `${formatHourRange(active.hour)} · ${active.show.subtitle}`;
+  const track = String(state.nowPlaying?.track || "").trim();
+  const showTitle = active.show.shortTitle || active.show.title || station.name;
+  const title = track || showTitle;
+  const artist = track ? showTitle : `${formatHourRange(active.hour)} · ${active.show.subtitle}`;
   const album = station.name;
   const coverUrl = new URL(active.show.cover, window.location.href).href;
   const jpegFallbackUrl = coverUrl.replace(/-512\.webp$/, "-512.jpg");
@@ -1300,11 +1339,12 @@ function startTicks() {
     if (nextCover && nextCover.getAttribute("src") !== next.show.cover) {
       nextCover.setAttribute("src", next.show.cover);
     }
-    document.querySelector("#nowPlayingTitle") && (document.querySelector("#nowPlayingTitle").textContent = active.show.shortTitle);
+    updateNowPlayingUi();
     state.sphere?.setImage(active.show.cover);
     updateMediaSession();
     updateClock();
   }, 1000);
+  state.nowPlayingTimer = window.setInterval(refreshNowPlaying, 5000);
 }
 
 function updateClock() {

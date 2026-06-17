@@ -8,159 +8,938 @@
     "appStoreUrl": "https://apps.apple.com/app/id6760590879"
   },
   "shows": {
-    "velvet-after-midnight": {
-      "title": "R&B Velvet after midnight",
-      "shortTitle": "Velvet After Midnight",
-      "subtitle": "R&B night flow",
-      "cover": "/assets/covers/cover-rb-512.webp",
-      "description": "Eine elegante nächtliche R&B-Reise durch Neonlicht, Regen, späte Gespräche und die leise Melancholie urbaner Nähe."
-    },
-    "electronic-depths": {
-      "title": "Electronic Depths",
-      "shortTitle": "Electronic Depths",
-      "subtitle": "Deep signals",
-      "cover": "/assets/covers/cover-electro-512.webp",
-      "description": "Elektronische Stücke zwischen Tiefe, Reduktion und klanglicher Weite."
-    },
-    "blue-structures": {
-      "title": "Jazz - Blue Structures",
-      "shortTitle": "Blue Structures",
-      "subtitle": "Night jazz",
-      "cover": "/assets/covers/cover-jazz-512.webp",
-      "description": "Jazz jenseits von Klischees: konzentriert, atmosphärisch und bewusst kuratiert."
-    },
-    "morning-soul": {
-      "title": "Morning Soul",
-      "shortTitle": "Morning Soul",
-      "subtitle": "Morning glow",
-      "cover": "/assets/covers/cover-soul-512.webp",
-      "description": "Wärme, Groove und Stimme: ein eleganter Start in den Morgen."
-    },
-    "open-road-country": {
-      "title": "Open Road Country",
-      "shortTitle": "Open Road Country",
-      "subtitle": "Wide road stories",
-      "cover": "/assets/covers/cover-country-512.webp",
-      "description": "Erdige Songs, klare Melodien und erzählerische Nähe."
-    },
-    "blues-at-five": {
+    "17_blues_at_five": {
       "title": "Blues at five",
-      "shortTitle": "Blues at Five",
-      "subtitle": "Late light blues",
-      "cover": "/assets/covers/cover-blues-512.webp",
-      "description": "Viele Facetten des Blues, von staubigem Delta bis modernem Noir."
+      "shortTitle": "Blues at five",
+      "subtitle": "Blues",
+      "cover": "/assets/heroes/blues-987c3ff19838.png",
+      "description": "Eine Reise durch viele Facetten des Blues – von staubigem Delta Blues über elektrischen Chicago-Sound bis zu Soul, Swamp und modernem Noir. Die Sendung verbindet klassische Blues-Traditionen mit neuen KI-komponierten Stücken, die von Nacht, Arbeit, Sehnsucht, Reue und einem Rest von Hoffnung erzählen."
     },
-    "pure-metal": {
-      "title": "Pure Metal",
-      "shortTitle": "Pure Metal",
-      "subtitle": "Pure metal",
-      "cover": "/assets/covers/cover-metal-512.webp",
-      "description": "Verschiedene Facetten des Metal vom Feinsten."
-    },
-    "chanson-electrique": {
-      "title": "Chanson Électrique",
-      "shortTitle": "Chanson Électrique",
-      "subtitle": "Paris circuits",
-      "cover": "/assets/covers/cover-chanson-electrique-512.webp",
-      "description": "Französische Lieder zwischen Zärtlichkeit, Haltung und Schatten."
-    },
-    "saxophone-tunes": {
-      "title": "Saxophone Tunes",
-      "shortTitle": "Saxophone Tunes",
-      "subtitle": "Midnight brass",
-      "cover": "/assets/covers/cover-saxophone-512.webp",
-      "description": "Eine instrumentale Reise durch die vielen Gesichter des Saxophons."
-    },
-    "indie-northern-skies": {
-      "title": "Indie - Northern Skies",
-      "shortTitle": "Northern Skies",
-      "subtitle": "Indie currents",
-      "cover": "/assets/covers/cover-indie-512.webp",
-      "description": "Gitarren, Haltung und Leichtigkeit für den Nachmittag."
-    },
-    "balkan-disco": {
-      "title": "Balkan Disco",
-      "shortTitle": "Balkan Disco",
-      "subtitle": "Brass, bass, neon",
-      "cover": "/assets/covers/cover-balkan-disco-512.webp",
-      "description": "Kroatische Hooks, rasende Bläser und Clubbeats bis zum Morgengrauen."
-    },
-    "grace-omalley": {
-      "title": "Irish Folk - Grace O'Malley",
-      "shortTitle": "Grace O'Malley",
-      "subtitle": "Irish folk saga",
-      "cover": "/assets/covers/cover-irish-512.webp",
-      "description": "Eine musikalische Geschichte zwischen Küste, Krone und Umbruch."
-    },
-    "rap-signal": {
-      "title": "Rap - No Peace in the Signal",
-      "shortTitle": "No Peace in the Signal",
-      "subtitle": "Rap report",
-      "cover": "/assets/covers/cover-rap-512.webp",
-      "description": "Politische Rap-Tracks über Macht, Miete, Grenzen, Propaganda und Widerstand."
-    },
-    "kingston-skies": {
+    "07_kingston_skies_reggae": {
       "title": "Reggae - Kingston Skies",
       "shortTitle": "Kingston Skies",
-      "subtitle": "Reggae sunlight",
-      "cover": "/assets/covers/cover-reggae-512.webp",
-      "description": "Reggae-Wärme von Roots und Lovers Rock bis Dub und urbaner Fusion."
+      "subtitle": "Raggae",
+      "cover": "/assets/heroes/raggae-6d522921dd77.png",
+      "description": "**Kingston Skies** führt durch zehn Facetten des Reggae – von warmem Roots und spiritueller Tiefe über Lovers Rock und Dub bis zu urbaner Reggae Fusion. Die Sendung verbindet Bass, Sonne, Witz und Widerstand zu einer musikalischen Reise, die zugleich entspannt, klug und voller Bewegung ist."
     },
-    "golden-days": {
-      "title": "70's - Golden Days, Neon Nights",
-      "shortTitle": "Golden Days",
-      "subtitle": "70s neon nights",
-      "cover": "/assets/covers/cover-70s-512.webp",
-      "description": "Retro-Licht, Disco-Pop und grosse Choruses."
+    "golden_days_neon_nights": {
+      "title": "70's-Golden Days, Neon Nights",
+      "shortTitle": "70's-Golden Days, Neon Nights",
+      "subtitle": "70er",
+      "cover": "/assets/heroes/70er-a71ab40a607b.png",
+      "description": "Eine musikalische Reise durch den Glanz, die Freiheit, die Romantik und die Zukunftslust der 70er- und 80er-Jahre — neu gestaltet im Geist dieser großen Pop-Epochen."
     },
-    "baroque-hour": {
-      "title": "Baroque Hour",
-      "shortTitle": "Baroque Hour",
-      "subtitle": "Sacred drama",
-      "cover": "/assets/covers/cover-sacred-512.webp",
-      "description": "Sakrale barocke Texturen und chorale Tiefe."
+    "rap_no_peace_in_the_signal": {
+      "title": "Rap-No Peace in the Signal",
+      "shortTitle": "Rap-No Peace in the Signal",
+      "subtitle": "Rap",
+      "cover": "/assets/heroes/rap-3051af64f3cc.png",
+      "description": "Zehn politische Rap-Tracks über Krieg, Angst, Macht, Miete, Grenzen, Propaganda und Widerstand. Eine düstere, spitze Sendung über die Frage, wie man in einer lauten, manipulativen Welt den Verstand behält."
     },
-    "weltklang": {
-      "title": "Weltklang",
-      "shortTitle": "Weltklang",
-      "subtitle": "World folk routes",
-      "cover": "/assets/covers/cover-world-512.webp",
-      "description": "Weltmusikroute mit Folk-Farben und offenen Räumen."
+    "balkan_disco": {
+      "title": "Balkan Disco",
+      "shortTitle": "Balkan Disco",
+      "subtitle": "Balkan Disco",
+      "cover": "/assets/heroes/balkan_disco-29d300e9454c.png",
+      "description": "Kroatische Hooks, rasende Bläser und Clubbeats bis zum Morgengrauen — AI Radio tanzt, als gäbe es keine Sperrstunde."
+    },
+    "r_b_velvet_after_midnight": {
+      "title": "R&B Velvet after midnight",
+      "shortTitle": "R&B Velvet after midnight",
+      "subtitle": "R&B",
+      "cover": "/assets/heroes/r_b-6a73c253e318.png",
+      "description": "Eine elegante nächtliche R&B-Reise durch Neonlicht, Regen, späte Gespräche und die leise Melancholie urbaner Nähe. Zwischen Neo Soul, Atmospheric R&B und jazzigen Soli entfalten sich zehn Songs wie Szenen eines Films: warm, luxuriös, verletzlich und bittersüß bis zum ersten Licht des Morgens."
+    },
+    "saxophone_tunes": {
+      "title": "Saxophone Tunes",
+      "shortTitle": "Saxophone Tunes",
+      "subtitle": "Saxophone",
+      "cover": "/assets/heroes/saxophone-16fe625173a2.png",
+      "description": "Eine instrumentale Reise durch die vielen Gesichter des Saxophons: von klassischer Eleganz über Big Band, Jazz, Blues und Funk bis zu Neon-Pop, Balkan-Brass und elektronischen Klangräumen. Im Mittelpunkt steht immer das Saxophon — mal samtig, mal wild, mal melancholisch, mal messerscharf."
+    },
+    "chanson_lectrique": {
+      "title": "Chanson Électrique",
+      "shortTitle": "Chanson Électrique",
+      "subtitle": "Chanson",
+      "cover": "/assets/heroes/chanson-444e90e471af.png",
+      "description": "Französische Lieder zwischen Zärtlichkeit, Haltung und Schatten"
+    },
+    "13_global_noon": {
+      "title": "World Music - Global Noon",
+      "shortTitle": "Global Noon",
+      "subtitle": "Welt",
+      "cover": "/assets/heroes/welt-5e2cb21c9aa7.png",
+      "description": "Ein farbiger Mittagsblock mit rhythmischer Vielfalt, internationalen Einflüssen und musikalischer Bewegung."
+    },
+    "pure_metal": {
+      "title": "Pure Metal",
+      "shortTitle": "Pure Metal",
+      "subtitle": "Metal",
+      "cover": "/assets/heroes/metal-2bc3ef960e21.png",
+      "description": "Verschiedene Facetten des Metal vom Feinsten"
+    },
+    "11_open_road_country": {
+      "title": "Open Road Country",
+      "shortTitle": "Open Road Country",
+      "subtitle": "Country",
+      "cover": "/assets/heroes/country-575c360d4d6b.png",
+      "description": "Erdige Songs, klare Melodien und erzählerische Nähe. Country passt ausgezeichnet in den offenen, hellen Vormittag."
+    },
+    "01_electronic_depths": {
+      "title": "Electronic Depths",
+      "shortTitle": "Electronic Depths",
+      "subtitle": "Elektro",
+      "cover": "/assets/heroes/elektro-ed31153bb0ad.png",
+      "description": "Zehn elektronische Stücke zwischen Tiefe, Reduktion und klanglicher Weite – für Hörer, die Musik nicht nur nebenbei hören wollen."
+    },
+    "14_northern_skies": {
+      "title": "Indie - Northern Skies",
+      "shortTitle": "Northern Skies",
+      "subtitle": "Indie",
+      "cover": "/assets/heroes/indie-42d44d5fd95b.png",
+      "description": "Gitarren, Haltung und Leichtigkeit. Ein nachmittäglicher Indie-Block, der nicht beschwert, sondern trägt."
+    },
+    "08_morning_soul": {
+      "title": "Morning Soul",
+      "shortTitle": "Morning Soul",
+      "subtitle": "Soull",
+      "cover": "/assets/heroes/soull-e17523aeead3.png",
+      "description": "Wärme, Groove und Stimme: ein eleganter Start in den Morgen mit klassischer und moderner Soul-Energie."
+    },
+    "18_granuaile_the_sea_and_the_crown": {
+      "title": "Irish Folk - Grace O’Malley – The Sea and the Crown",
+      "shortTitle": "Grace O’Malley",
+      "subtitle": "Irish",
+      "cover": "/assets/heroes/irish-f74f788c0b59.png",
+      "description": "Eine musikalische Geschichte über Grace O’Malley – Seefahrerin, Machtfigur und Strategin im Irland des 16. Jahrhunderts. Zwischen Küste und Krone entfaltet sich ein Leben im Spannungsfeld von Handel, Konflikt und politischem Umbruch."
+    },
+    "20_blue_structures_eine_reise_durch_den_jazz": {
+      "title": "Jazz - Blue Structures",
+      "shortTitle": "Blue Structures",
+      "subtitle": "Jazz",
+      "cover": "/assets/heroes/jazz-4505be9749d5.png",
+      "description": "Eine Stunde Jazz jenseits von Klischees. Von kühlen, nächtlichen Klangräumen über rhythmische Energie bis hin zu experimentellen Grenzbereichen und zurück in klare Formen. Diese Sendung verbindet klassische Stilrichtungen mit modernen Einflüssen und zeigt Jazz als lebendige, sich ständig verändernde Sprache. Konzentriert, atmosphärisch und bewusst kuratiert."
     }
   },
   "defaultSlots": [
-    { "hour": 0, "show": "velvet-after-midnight" },
-    { "hour": 1, "show": "electronic-depths" },
-    { "hour": 2, "show": "blue-structures" },
-    { "hour": 3, "show": "morning-soul" },
-    { "hour": 4, "show": "open-road-country" },
-    { "hour": 5, "show": "blues-at-five" },
-    { "hour": 6, "show": "pure-metal" },
-    { "hour": 7, "show": "chanson-electrique" },
-    { "hour": 8, "show": "saxophone-tunes" },
-    { "hour": 9, "show": "open-road-country" },
-    { "hour": 10, "show": "blue-structures" },
-    { "hour": 11, "show": "morning-soul" },
-    { "hour": 12, "show": "electronic-depths" },
-    { "hour": 13, "show": "chanson-electrique" },
-    { "hour": 14, "show": "indie-northern-skies" },
-    { "hour": 15, "show": "velvet-after-midnight" },
-    { "hour": 16, "show": "balkan-disco" },
-    { "hour": 17, "show": "saxophone-tunes" },
-    { "hour": 18, "show": "grace-omalley" },
-    { "hour": 19, "show": "chanson-electrique" },
-    { "hour": 20, "show": "rap-signal" },
-    { "hour": 21, "show": "pure-metal" },
-    { "hour": 22, "show": "kingston-skies" },
-    { "hour": 23, "show": "electronic-depths" }
+    {
+      "hour": 0,
+      "show": "17_blues_at_five"
+    },
+    {
+      "hour": 1,
+      "show": "07_kingston_skies_reggae"
+    },
+    {
+      "hour": 2,
+      "show": "golden_days_neon_nights"
+    },
+    {
+      "hour": 3,
+      "show": "rap_no_peace_in_the_signal"
+    },
+    {
+      "hour": 4,
+      "show": "balkan_disco"
+    },
+    {
+      "hour": 5,
+      "show": "r_b_velvet_after_midnight"
+    },
+    {
+      "hour": 6,
+      "show": "saxophone_tunes"
+    },
+    {
+      "hour": 7,
+      "show": "chanson_lectrique"
+    },
+    {
+      "hour": 8,
+      "show": "13_global_noon"
+    },
+    {
+      "hour": 9,
+      "show": "pure_metal"
+    },
+    {
+      "hour": 10,
+      "show": "11_open_road_country"
+    },
+    {
+      "hour": 11,
+      "show": "01_electronic_depths"
+    },
+    {
+      "hour": 12,
+      "show": "14_northern_skies"
+    },
+    {
+      "hour": 13,
+      "show": "08_morning_soul"
+    },
+    {
+      "hour": 14,
+      "show": "18_granuaile_the_sea_and_the_crown"
+    },
+    {
+      "hour": 15,
+      "show": "20_blue_structures_eine_reise_durch_den_jazz"
+    },
+    {
+      "hour": 16,
+      "show": "17_blues_at_five"
+    },
+    {
+      "hour": 17,
+      "show": "07_kingston_skies_reggae"
+    },
+    {
+      "hour": 18,
+      "show": "golden_days_neon_nights"
+    },
+    {
+      "hour": 19,
+      "show": "rap_no_peace_in_the_signal"
+    },
+    {
+      "hour": 20,
+      "show": "balkan_disco"
+    },
+    {
+      "hour": 21,
+      "show": "r_b_velvet_after_midnight"
+    },
+    {
+      "hour": 22,
+      "show": "saxophone_tunes"
+    },
+    {
+      "hour": 23,
+      "show": "chanson_lectrique"
+    }
   ],
   "weekdays": [
-    { "id": "monday", "label": "Mo", "name": "Montag", "slots": "default" },
-    { "id": "tuesday", "label": "Di", "name": "Dienstag", "slots": "default" },
-    { "id": "wednesday", "label": "Mi", "name": "Mittwoch", "slots": "default" },
-    { "id": "thursday", "label": "Do", "name": "Donnerstag", "slots": "default" },
-    { "id": "friday", "label": "Fr", "name": "Freitag", "slots": "default" },
-    { "id": "saturday", "label": "Sa", "name": "Samstag", "slots": "default" },
-    { "id": "sunday", "label": "So", "name": "Sonntag", "slots": "default" }
+    {
+      "id": "monday",
+      "label": "Mo",
+      "name": "Montag",
+      "slots": [
+        {
+          "hour": 0,
+          "show": "17_blues_at_five"
+        },
+        {
+          "hour": 1,
+          "show": "07_kingston_skies_reggae"
+        },
+        {
+          "hour": 2,
+          "show": "golden_days_neon_nights"
+        },
+        {
+          "hour": 3,
+          "show": "rap_no_peace_in_the_signal"
+        },
+        {
+          "hour": 4,
+          "show": "balkan_disco"
+        },
+        {
+          "hour": 5,
+          "show": "r_b_velvet_after_midnight"
+        },
+        {
+          "hour": 6,
+          "show": "saxophone_tunes"
+        },
+        {
+          "hour": 7,
+          "show": "chanson_lectrique"
+        },
+        {
+          "hour": 8,
+          "show": "13_global_noon"
+        },
+        {
+          "hour": 9,
+          "show": "pure_metal"
+        },
+        {
+          "hour": 10,
+          "show": "11_open_road_country"
+        },
+        {
+          "hour": 11,
+          "show": "01_electronic_depths"
+        },
+        {
+          "hour": 12,
+          "show": "14_northern_skies"
+        },
+        {
+          "hour": 13,
+          "show": "08_morning_soul"
+        },
+        {
+          "hour": 14,
+          "show": "18_granuaile_the_sea_and_the_crown"
+        },
+        {
+          "hour": 15,
+          "show": "20_blue_structures_eine_reise_durch_den_jazz"
+        },
+        {
+          "hour": 16,
+          "show": "17_blues_at_five"
+        },
+        {
+          "hour": 17,
+          "show": "07_kingston_skies_reggae"
+        },
+        {
+          "hour": 18,
+          "show": "golden_days_neon_nights"
+        },
+        {
+          "hour": 19,
+          "show": "rap_no_peace_in_the_signal"
+        },
+        {
+          "hour": 20,
+          "show": "balkan_disco"
+        },
+        {
+          "hour": 21,
+          "show": "r_b_velvet_after_midnight"
+        },
+        {
+          "hour": 22,
+          "show": "saxophone_tunes"
+        },
+        {
+          "hour": 23,
+          "show": "chanson_lectrique"
+        }
+      ]
+    },
+    {
+      "id": "tuesday",
+      "label": "Di",
+      "name": "Dienstag",
+      "slots": [
+        {
+          "hour": 0,
+          "show": "17_blues_at_five"
+        },
+        {
+          "hour": 1,
+          "show": "07_kingston_skies_reggae"
+        },
+        {
+          "hour": 2,
+          "show": "golden_days_neon_nights"
+        },
+        {
+          "hour": 3,
+          "show": "rap_no_peace_in_the_signal"
+        },
+        {
+          "hour": 4,
+          "show": "balkan_disco"
+        },
+        {
+          "hour": 5,
+          "show": "r_b_velvet_after_midnight"
+        },
+        {
+          "hour": 6,
+          "show": "saxophone_tunes"
+        },
+        {
+          "hour": 7,
+          "show": "chanson_lectrique"
+        },
+        {
+          "hour": 8,
+          "show": "13_global_noon"
+        },
+        {
+          "hour": 9,
+          "show": "pure_metal"
+        },
+        {
+          "hour": 10,
+          "show": "11_open_road_country"
+        },
+        {
+          "hour": 11,
+          "show": "01_electronic_depths"
+        },
+        {
+          "hour": 12,
+          "show": "14_northern_skies"
+        },
+        {
+          "hour": 13,
+          "show": "08_morning_soul"
+        },
+        {
+          "hour": 14,
+          "show": "18_granuaile_the_sea_and_the_crown"
+        },
+        {
+          "hour": 15,
+          "show": "20_blue_structures_eine_reise_durch_den_jazz"
+        },
+        {
+          "hour": 16,
+          "show": "17_blues_at_five"
+        },
+        {
+          "hour": 17,
+          "show": "07_kingston_skies_reggae"
+        },
+        {
+          "hour": 18,
+          "show": "golden_days_neon_nights"
+        },
+        {
+          "hour": 19,
+          "show": "rap_no_peace_in_the_signal"
+        },
+        {
+          "hour": 20,
+          "show": "balkan_disco"
+        },
+        {
+          "hour": 21,
+          "show": "r_b_velvet_after_midnight"
+        },
+        {
+          "hour": 22,
+          "show": "saxophone_tunes"
+        },
+        {
+          "hour": 23,
+          "show": "chanson_lectrique"
+        }
+      ]
+    },
+    {
+      "id": "wednesday",
+      "label": "Mi",
+      "name": "Mittwoch",
+      "slots": [
+        {
+          "hour": 0,
+          "show": "17_blues_at_five"
+        },
+        {
+          "hour": 1,
+          "show": "07_kingston_skies_reggae"
+        },
+        {
+          "hour": 2,
+          "show": "golden_days_neon_nights"
+        },
+        {
+          "hour": 3,
+          "show": "rap_no_peace_in_the_signal"
+        },
+        {
+          "hour": 4,
+          "show": "balkan_disco"
+        },
+        {
+          "hour": 5,
+          "show": "r_b_velvet_after_midnight"
+        },
+        {
+          "hour": 6,
+          "show": "saxophone_tunes"
+        },
+        {
+          "hour": 7,
+          "show": "chanson_lectrique"
+        },
+        {
+          "hour": 8,
+          "show": "13_global_noon"
+        },
+        {
+          "hour": 9,
+          "show": "pure_metal"
+        },
+        {
+          "hour": 10,
+          "show": "11_open_road_country"
+        },
+        {
+          "hour": 11,
+          "show": "01_electronic_depths"
+        },
+        {
+          "hour": 12,
+          "show": "14_northern_skies"
+        },
+        {
+          "hour": 13,
+          "show": "08_morning_soul"
+        },
+        {
+          "hour": 14,
+          "show": "18_granuaile_the_sea_and_the_crown"
+        },
+        {
+          "hour": 15,
+          "show": "20_blue_structures_eine_reise_durch_den_jazz"
+        },
+        {
+          "hour": 16,
+          "show": "17_blues_at_five"
+        },
+        {
+          "hour": 17,
+          "show": "07_kingston_skies_reggae"
+        },
+        {
+          "hour": 18,
+          "show": "golden_days_neon_nights"
+        },
+        {
+          "hour": 19,
+          "show": "rap_no_peace_in_the_signal"
+        },
+        {
+          "hour": 20,
+          "show": "balkan_disco"
+        },
+        {
+          "hour": 21,
+          "show": "r_b_velvet_after_midnight"
+        },
+        {
+          "hour": 22,
+          "show": "saxophone_tunes"
+        },
+        {
+          "hour": 23,
+          "show": "chanson_lectrique"
+        }
+      ]
+    },
+    {
+      "id": "thursday",
+      "label": "Do",
+      "name": "Donnerstag",
+      "slots": [
+        {
+          "hour": 0,
+          "show": "17_blues_at_five"
+        },
+        {
+          "hour": 1,
+          "show": "07_kingston_skies_reggae"
+        },
+        {
+          "hour": 2,
+          "show": "golden_days_neon_nights"
+        },
+        {
+          "hour": 3,
+          "show": "rap_no_peace_in_the_signal"
+        },
+        {
+          "hour": 4,
+          "show": "balkan_disco"
+        },
+        {
+          "hour": 5,
+          "show": "r_b_velvet_after_midnight"
+        },
+        {
+          "hour": 6,
+          "show": "saxophone_tunes"
+        },
+        {
+          "hour": 7,
+          "show": "chanson_lectrique"
+        },
+        {
+          "hour": 8,
+          "show": "13_global_noon"
+        },
+        {
+          "hour": 9,
+          "show": "pure_metal"
+        },
+        {
+          "hour": 10,
+          "show": "11_open_road_country"
+        },
+        {
+          "hour": 11,
+          "show": "01_electronic_depths"
+        },
+        {
+          "hour": 12,
+          "show": "14_northern_skies"
+        },
+        {
+          "hour": 13,
+          "show": "08_morning_soul"
+        },
+        {
+          "hour": 14,
+          "show": "18_granuaile_the_sea_and_the_crown"
+        },
+        {
+          "hour": 15,
+          "show": "20_blue_structures_eine_reise_durch_den_jazz"
+        },
+        {
+          "hour": 16,
+          "show": "17_blues_at_five"
+        },
+        {
+          "hour": 17,
+          "show": "07_kingston_skies_reggae"
+        },
+        {
+          "hour": 18,
+          "show": "golden_days_neon_nights"
+        },
+        {
+          "hour": 19,
+          "show": "rap_no_peace_in_the_signal"
+        },
+        {
+          "hour": 20,
+          "show": "balkan_disco"
+        },
+        {
+          "hour": 21,
+          "show": "r_b_velvet_after_midnight"
+        },
+        {
+          "hour": 22,
+          "show": "saxophone_tunes"
+        },
+        {
+          "hour": 23,
+          "show": "chanson_lectrique"
+        }
+      ]
+    },
+    {
+      "id": "friday",
+      "label": "Fr",
+      "name": "Freitag",
+      "slots": [
+        {
+          "hour": 0,
+          "show": "17_blues_at_five"
+        },
+        {
+          "hour": 1,
+          "show": "07_kingston_skies_reggae"
+        },
+        {
+          "hour": 2,
+          "show": "golden_days_neon_nights"
+        },
+        {
+          "hour": 3,
+          "show": "rap_no_peace_in_the_signal"
+        },
+        {
+          "hour": 4,
+          "show": "balkan_disco"
+        },
+        {
+          "hour": 5,
+          "show": "r_b_velvet_after_midnight"
+        },
+        {
+          "hour": 6,
+          "show": "saxophone_tunes"
+        },
+        {
+          "hour": 7,
+          "show": "chanson_lectrique"
+        },
+        {
+          "hour": 8,
+          "show": "13_global_noon"
+        },
+        {
+          "hour": 9,
+          "show": "pure_metal"
+        },
+        {
+          "hour": 10,
+          "show": "11_open_road_country"
+        },
+        {
+          "hour": 11,
+          "show": "01_electronic_depths"
+        },
+        {
+          "hour": 12,
+          "show": "14_northern_skies"
+        },
+        {
+          "hour": 13,
+          "show": "08_morning_soul"
+        },
+        {
+          "hour": 14,
+          "show": "18_granuaile_the_sea_and_the_crown"
+        },
+        {
+          "hour": 15,
+          "show": "20_blue_structures_eine_reise_durch_den_jazz"
+        },
+        {
+          "hour": 16,
+          "show": "17_blues_at_five"
+        },
+        {
+          "hour": 17,
+          "show": "07_kingston_skies_reggae"
+        },
+        {
+          "hour": 18,
+          "show": "golden_days_neon_nights"
+        },
+        {
+          "hour": 19,
+          "show": "rap_no_peace_in_the_signal"
+        },
+        {
+          "hour": 20,
+          "show": "balkan_disco"
+        },
+        {
+          "hour": 21,
+          "show": "r_b_velvet_after_midnight"
+        },
+        {
+          "hour": 22,
+          "show": "saxophone_tunes"
+        },
+        {
+          "hour": 23,
+          "show": "chanson_lectrique"
+        }
+      ]
+    },
+    {
+      "id": "saturday",
+      "label": "Sa",
+      "name": "Samstag",
+      "slots": [
+        {
+          "hour": 0,
+          "show": "17_blues_at_five"
+        },
+        {
+          "hour": 1,
+          "show": "07_kingston_skies_reggae"
+        },
+        {
+          "hour": 2,
+          "show": "golden_days_neon_nights"
+        },
+        {
+          "hour": 3,
+          "show": "rap_no_peace_in_the_signal"
+        },
+        {
+          "hour": 4,
+          "show": "balkan_disco"
+        },
+        {
+          "hour": 5,
+          "show": "r_b_velvet_after_midnight"
+        },
+        {
+          "hour": 6,
+          "show": "saxophone_tunes"
+        },
+        {
+          "hour": 7,
+          "show": "chanson_lectrique"
+        },
+        {
+          "hour": 8,
+          "show": "13_global_noon"
+        },
+        {
+          "hour": 9,
+          "show": "pure_metal"
+        },
+        {
+          "hour": 10,
+          "show": "11_open_road_country"
+        },
+        {
+          "hour": 11,
+          "show": "01_electronic_depths"
+        },
+        {
+          "hour": 12,
+          "show": "14_northern_skies"
+        },
+        {
+          "hour": 13,
+          "show": "08_morning_soul"
+        },
+        {
+          "hour": 14,
+          "show": "18_granuaile_the_sea_and_the_crown"
+        },
+        {
+          "hour": 15,
+          "show": "20_blue_structures_eine_reise_durch_den_jazz"
+        },
+        {
+          "hour": 16,
+          "show": "17_blues_at_five"
+        },
+        {
+          "hour": 17,
+          "show": "07_kingston_skies_reggae"
+        },
+        {
+          "hour": 18,
+          "show": "golden_days_neon_nights"
+        },
+        {
+          "hour": 19,
+          "show": "rap_no_peace_in_the_signal"
+        },
+        {
+          "hour": 20,
+          "show": "balkan_disco"
+        },
+        {
+          "hour": 21,
+          "show": "r_b_velvet_after_midnight"
+        },
+        {
+          "hour": 22,
+          "show": "saxophone_tunes"
+        },
+        {
+          "hour": 23,
+          "show": "chanson_lectrique"
+        }
+      ]
+    },
+    {
+      "id": "sunday",
+      "label": "So",
+      "name": "Sonntag",
+      "slots": [
+        {
+          "hour": 0,
+          "show": "17_blues_at_five"
+        },
+        {
+          "hour": 1,
+          "show": "07_kingston_skies_reggae"
+        },
+        {
+          "hour": 2,
+          "show": "golden_days_neon_nights"
+        },
+        {
+          "hour": 3,
+          "show": "rap_no_peace_in_the_signal"
+        },
+        {
+          "hour": 4,
+          "show": "balkan_disco"
+        },
+        {
+          "hour": 5,
+          "show": "r_b_velvet_after_midnight"
+        },
+        {
+          "hour": 6,
+          "show": "saxophone_tunes"
+        },
+        {
+          "hour": 7,
+          "show": "chanson_lectrique"
+        },
+        {
+          "hour": 8,
+          "show": "13_global_noon"
+        },
+        {
+          "hour": 9,
+          "show": "pure_metal"
+        },
+        {
+          "hour": 10,
+          "show": "11_open_road_country"
+        },
+        {
+          "hour": 11,
+          "show": "01_electronic_depths"
+        },
+        {
+          "hour": 12,
+          "show": "14_northern_skies"
+        },
+        {
+          "hour": 13,
+          "show": "08_morning_soul"
+        },
+        {
+          "hour": 14,
+          "show": "18_granuaile_the_sea_and_the_crown"
+        },
+        {
+          "hour": 15,
+          "show": "20_blue_structures_eine_reise_durch_den_jazz"
+        },
+        {
+          "hour": 16,
+          "show": "17_blues_at_five"
+        },
+        {
+          "hour": 17,
+          "show": "07_kingston_skies_reggae"
+        },
+        {
+          "hour": 18,
+          "show": "golden_days_neon_nights"
+        },
+        {
+          "hour": 19,
+          "show": "rap_no_peace_in_the_signal"
+        },
+        {
+          "hour": 20,
+          "show": "balkan_disco"
+        },
+        {
+          "hour": 21,
+          "show": "r_b_velvet_after_midnight"
+        },
+        {
+          "hour": 22,
+          "show": "saxophone_tunes"
+        },
+        {
+          "hour": 23,
+          "show": "chanson_lectrique"
+        }
+      ]
+    }
   ]
 }
