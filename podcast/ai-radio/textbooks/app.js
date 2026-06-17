@@ -1,7 +1,8 @@
 (function () {
   const data = window.TEXTBOOK_DATA || { shows: [] };
+  const requestedShowId = getRequestedShowId();
   const state = {
-    showId: data.shows[0]?.id || "",
+    showId: requestedShowId || data.shows[0]?.id || "",
     songIndex: 0,
     drag: null,
     carouselOffset: 0,
@@ -12,6 +13,15 @@
   const showCarousel = document.getElementById("showCarousel");
   const reader = document.getElementById("reader");
   const songTrack = document.getElementById("songTrack");
+
+  function getRequestedShowId() {
+    const params = new URLSearchParams(window.location.search);
+    const requested = params.get("show") || params.get("sendung") || "";
+    const normalized = slugify(requested);
+    if (!normalized) return "";
+    const match = data.shows.find((show) => show.id === normalized || slugify(show.title) === normalized);
+    return match?.id || "";
+  }
 
   function currentShowIndex() {
     const index = data.shows.findIndex((show) => show.id === state.showId);
@@ -24,6 +34,18 @@
 
   function wrap(index, length) {
     return ((index % length) + length) % length;
+  }
+
+  function slugify(value) {
+    return String(value || "")
+      .trim()
+      .toLowerCase()
+      .replaceAll("ä", "ae")
+      .replaceAll("ö", "oe")
+      .replaceAll("ü", "ue")
+      .replaceAll("ß", "ss")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
   }
 
   function relativePosition(index, selectedIndex, count) {

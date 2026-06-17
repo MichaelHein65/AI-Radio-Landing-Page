@@ -83,6 +83,23 @@ const dayNameById = {
 const PLAYER_LOCK_KEY = "ai-radio-active-player";
 const PLAYER_LOCK_TTL_MS = 12000;
 const PLAYER_LOCK_HEARTBEAT_MS = 3000;
+const TEXTBOOK_SHOW_BY_PROGRAM_SHOW = {
+  "pure_metal": "02-a-chronicles-of-fire-and-steel",
+  "11_open_road_country": "03-a-ai-radio-country-roads-collection",
+  "14_northern_skies": "05-a-indie-reflections",
+  "08_morning_soul": "06-a-soul-between-light-and-shadow",
+  "18_granuaile_the_sea_and_the_crown": "07-a-granuaile-the-sea-and-the-crown",
+  "20_blue_structures_eine_reise_durch_den_jazz": "08-a-blue-structures-eine-reise-durch-den-jazz",
+  "17_blues_at_five": "09-a-blues-at-five",
+  "07_kingston_skies_reggae": "11-a-kingston-skies",
+  "golden_days_neon_nights": "12-a-golden-days-neon-nights",
+  "rap_no_peace_in_the_signal": "13-a-political-rap-special",
+  "balkan_disco": "14-a-balkan-disco-de",
+  "r_b_velvet_after_midnight": "15-a-velvet-after-midnight",
+  "saxophone_tunes": "16-a-saxophone-tunes",
+  "chanson_lectrique": "17-a-chanson-lectrique",
+  "13_global_noon": "01-b-weltklang"
+};
 
 init();
 
@@ -164,7 +181,7 @@ function render() {
                   <small>Sendungen nachhören</small>
                 </span>
               </a>
-              <a class="media-link textbook-link" href="${station.textbookUrl}" target="_blank" rel="noopener">
+              <a class="media-link textbook-link" id="textbookLink" href="${getTextbookUrl(activeSlot)}" target="_blank" rel="noopener">
                 <i data-lucide="book-open"></i>
                 <span>
                   <strong>Textbooks</strong>
@@ -916,6 +933,7 @@ function getSlotsForDay(dayId) {
   const rawSlots = day.slots === "default" ? state.config.defaultSlots : day.slots;
   return rawSlots.map((slot) => ({
     ...slot,
+    showId: slot.show,
     show: state.config.shows[slot.show]
   })).filter((slot) => slot.show);
 }
@@ -1252,6 +1270,21 @@ function getStreamStatusText() {
   return state.isPlaying ? "Verbunden" : "Bereit";
 }
 
+function getTextbookUrl(slot = getActiveSlot()) {
+  const baseUrl = state.config?.station?.textbookUrl || "/podcast/ai-radio/textbooks/";
+  const showId = String(slot?.showId || slot?.showKey || "").trim();
+  const textbookShowId = TEXTBOOK_SHOW_BY_PROGRAM_SHOW[showId];
+  if (!textbookShowId) return baseUrl;
+  try {
+    const url = new URL(baseUrl, window.location.href);
+    url.searchParams.set("show", textbookShowId);
+    return url.href;
+  } catch {
+    const separator = baseUrl.includes("?") ? "&" : "?";
+    return `${baseUrl}${separator}show=${encodeURIComponent(textbookShowId)}`;
+  }
+}
+
 function getNowPlayingText() {
   const track = String(state.nowPlaying?.track || "").trim();
   return track || getActiveSlot().show.shortTitle;
@@ -1338,6 +1371,10 @@ function startTicks() {
     const nextCover = document.querySelector("#nextShowCover");
     if (nextCover && nextCover.getAttribute("src") !== next.show.cover) {
       nextCover.setAttribute("src", next.show.cover);
+    }
+    const textbookLink = document.querySelector("#textbookLink");
+    if (textbookLink) {
+      textbookLink.setAttribute("href", getTextbookUrl(active));
     }
     updateNowPlayingUi();
     state.sphere?.setImage(active.show.cover);
