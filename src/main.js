@@ -515,8 +515,9 @@ function bindEvents() {
 }
 
 function moveSelection(step) {
-  const slots = getSlotsForDay(state.selectedDayId);
-  state.selectedIndex = (state.selectedIndex + step + slots.length) % slots.length;
+  const nextSelection = resolveCarouselSelection(step);
+  state.selectedDayId = nextSelection.dayId;
+  state.selectedIndex = nextSelection.index;
   render();
 }
 
@@ -535,6 +536,7 @@ function spinCarouselBy(step, options = {}) {
   window.cancelAnimationFrame(state.carouselAnimationFrame);
   const maxStep = Number.isFinite(options.maxStep) ? Math.max(1, options.maxStep) : 3;
   const boundedStep = Math.max(-maxStep, Math.min(maxStep, Math.round(step)));
+  const nextSelection = resolveCarouselSelection(boundedStep);
   const startProgress = Number.isFinite(options.fromProgress) ? options.fromProgress : state.carouselDragProgress;
   const targetProgress = -boundedStep;
   const distance = Math.abs(targetProgress - startProgress);
@@ -559,12 +561,18 @@ function spinCarouselBy(step, options = {}) {
       return;
     }
 
-    state.selectedIndex = (state.selectedIndex + boundedStep + slots.length) % slots.length;
+    const dayChanged = nextSelection.dayId !== state.selectedDayId;
+    state.selectedDayId = nextSelection.dayId;
+    state.selectedIndex = nextSelection.index;
     state.carouselDragProgress = 0;
-    paintCarouselFrame(0);
-    updateCarouselSelectionUi();
-    updateSelectedShowSummary();
     carouselShell.classList.remove("is-spinning");
+    if (dayChanged) {
+      render();
+    } else {
+      paintCarouselFrame(0);
+      updateCarouselSelectionUi();
+      updateSelectedShowSummary();
+    }
     if (options.scheduleReturn) {
       scheduleCarouselReturn();
     }
@@ -676,6 +684,40 @@ function getShortestCarouselStep(fromIndex, toIndex, total, maxStep = 3) {
   if (step > total / 2) step -= total;
   if (step < -total / 2) step += total;
   return Math.max(-maxStep, Math.min(maxStep, step));
+}
+
+function getAdjacentDayId(dayId, direction) {
+  const index = weekdayOrder.indexOf(dayId);
+  if (index < 0) return dayId;
+  const offset = direction >= 0 ? 1 : -1;
+  return weekdayOrder[(index + offset + weekdayOrder.length) % weekdayOrder.length];
+}
+
+function resolveCarouselSelection(step) {
+  let dayId = state.selectedDayId;
+  let index = state.selectedIndex + Math.round(step);
+  let guard = 0;
+
+  while (guard < weekdayOrder.length * 2) {
+    const slots = getSlotsForDay(dayId);
+    if (!slots.length) {
+      return { dayId: state.selectedDayId, index: state.selectedIndex };
+    }
+    if (index >= 0 && index < slots.length) {
+      return { dayId, index };
+    }
+    if (index >= slots.length) {
+      index -= slots.length;
+      dayId = getAdjacentDayId(dayId, 1);
+    } else {
+      dayId = getAdjacentDayId(dayId, -1);
+      const previousSlots = getSlotsForDay(dayId);
+      index += previousSlots.length;
+    }
+    guard += 1;
+  }
+
+  return { dayId: state.selectedDayId, index: state.selectedIndex };
 }
 
 function easeOutQuint(value) {
