@@ -51,6 +51,8 @@ npm run build
 
 Die Live-Version liegt auf dem Pi4 unter `/home/pi4/web` und wird lokal durch den Server auf Port `8080` ausgeliefert. Der öffentliche Zugriff erfolgt über `https://ai-radio.cc/`.
 
+Wichtig: Nicht den kompletten Webroot mit `rsync --delete dist/ pi4:/home/pi4/web/` überschreiben. In `/home/pi4/web` liegen auch `server.py` und persistente Dateien wie `data/comments.json` und `data/subscribers.json`.
+
 Direktes Deployment:
 
 ```bash
