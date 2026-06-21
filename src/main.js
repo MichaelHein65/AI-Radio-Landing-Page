@@ -83,6 +83,11 @@ const dayNameById = {
 const PLAYER_LOCK_KEY = "ai-radio-active-player";
 const PLAYER_LOCK_TTL_MS = 12000;
 const PLAYER_LOCK_HEARTBEAT_MS = 3000;
+const CAROUSEL_MIN_DRAG_PX = 52;
+const CAROUSEL_DIRECTION_DRAG_UNITS = 0.24;
+const CAROUSEL_VELOCITY_STEP_UNITS = 0.34;
+const CAROUSEL_FAST_VELOCITY_UNITS = 0.72;
+const CAROUSEL_MAX_THROW_STEPS = 3;
 const TEXTBOOK_SHOW_BY_PROGRAM_SHOW = {
   "pure_metal": "02-a-chronicles-of-fire-and-steel",
   "11_open_road_country": "03-a-ai-radio-country-roads-collection",
@@ -466,13 +471,20 @@ function bindEvents() {
     dragStart = null;
     const elapsed = Math.max(1, event.timeStamp - dragStartTime);
     const releaseVelocity = Math.abs(dragVelocity) > 0.01 ? dragVelocity : delta / elapsed;
-    const projectedDelta = delta + releaseVelocity * 180;
     const cardStep = Math.max(190, Math.min(260, carouselShell.clientWidth * 0.22));
-    const rawStep = Math.round(Math.abs(projectedDelta) / cardStep);
-    const velocityStep = Math.abs(releaseVelocity) > 0.72 ? 2 : 1;
-    const stepCount = Math.max(Math.abs(delta) > 52 ? 1 : 0, rawStep, Math.abs(releaseVelocity) > 0.42 ? velocityStep : 0);
+    const dragUnits = delta / cardStep;
+    const velocityUnits = releaseVelocity * 170 / cardStep;
+    const hasDirectionalDrag = Math.abs(dragUnits) >= CAROUSEL_DIRECTION_DRAG_UNITS || Math.abs(delta) >= CAROUSEL_MIN_DRAG_PX;
+    const hasDirectionalVelocity = Math.abs(velocityUnits) >= CAROUSEL_VELOCITY_STEP_UNITS;
+    const directionUnits = hasDirectionalDrag ? dragUnits : velocityUnits;
+    const projectedUnits = hasDirectionalDrag
+      ? dragUnits + Math.sign(dragUnits) * Math.max(0, Math.sign(dragUnits) * velocityUnits) * 0.9
+      : velocityUnits;
+    const rawStep = Math.round(Math.abs(projectedUnits));
+    const velocityStep = Math.abs(velocityUnits) >= CAROUSEL_FAST_VELOCITY_UNITS ? 2 : 1;
+    const stepCount = Math.max(hasDirectionalDrag ? 1 : 0, rawStep, hasDirectionalVelocity ? velocityStep : 0);
     if (stepCount > 0) {
-      spinCarouselBy((projectedDelta < 0 ? 1 : -1) * Math.min(3, stepCount), {
+      spinCarouselBy((directionUnits < 0 ? 1 : -1) * Math.min(CAROUSEL_MAX_THROW_STEPS, stepCount), {
         fromProgress: state.carouselDragProgress,
         velocity: releaseVelocity,
         scheduleReturn: true
