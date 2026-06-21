@@ -553,7 +553,9 @@ function spinCarouselBy(step, options = {}) {
   const targetProgress = -boundedStep;
   const distance = Math.abs(targetProgress - startProgress);
   const speed = Math.min(1.6, Math.abs(options.velocity ?? 0));
-  const duration = Math.max(520, Math.min(1120, 620 + distance * 190 - speed * 120));
+  const duration = Number.isFinite(options.duration)
+    ? Math.max(240, options.duration)
+    : Math.max(520, Math.min(1120, 620 + distance * 190 - speed * 120));
   const startTime = performance.now();
 
   state.carouselDragProgress = startProgress;
@@ -587,6 +589,9 @@ function spinCarouselBy(step, options = {}) {
     }
     if (options.scheduleReturn) {
       scheduleCarouselReturn();
+    }
+    if (typeof options.onComplete === "function") {
+      options.onComplete();
     }
   };
 
@@ -627,9 +632,26 @@ function spinCarouselToSelection(targetDayId, targetIndex, options = {}) {
     ? getShortestCarouselStep(state.selectedIndex, targetIndex, slots.length, options.returning ? slots.length : 3)
     : getShortestCarouselStepToSelection(targetDayId, targetIndex);
   if (step !== 0) {
+    if (options.returning && Math.abs(step) > 1) {
+      spinCarouselBy(Math.sign(step), {
+        maxStep: 1,
+        duration: 680,
+        velocity: 0.12,
+        scheduleReturn: false,
+        onComplete: () => {
+          clearCarouselReturnTimer();
+          state.carouselReturnTimer = window.setTimeout(() => {
+            spinCarouselToSelection(targetDayId, targetIndex, options);
+          }, 90);
+        }
+      });
+      return;
+    }
+
     spinCarouselBy(step, {
-      maxStep: options.returning ? getTotalCarouselSlotCount() : 3,
-      velocity: 0.28,
+      maxStep: options.returning ? 1 : 3,
+      duration: options.returning ? 680 : undefined,
+      velocity: options.returning ? 0.12 : 0.28,
       scheduleReturn: false
     });
   }
