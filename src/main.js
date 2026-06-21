@@ -595,17 +595,14 @@ function spinCarouselBy(step, options = {}) {
 
 function scheduleCarouselReturn() {
   clearCarouselReturnTimer();
-  const todayId = weekdayOrder[new Date().getDay()];
-  if (state.selectedDayId !== todayId) {
-    return;
-  }
 
   state.carouselReturnTimer = window.setTimeout(() => {
+    const todayId = weekdayOrder[new Date().getDay()];
     const currentIndex = getCurrentSlotIndex();
-    if (currentIndex < 0 || currentIndex === state.selectedIndex) {
+    if (currentIndex < 0 || (state.selectedDayId === todayId && currentIndex === state.selectedIndex)) {
       return;
     }
-    spinCarouselToIndex(currentIndex, { returning: true });
+    spinCarouselToSelection(todayId, currentIndex, { returning: true });
   }, 5000);
 }
 
@@ -617,14 +614,21 @@ function clearCarouselReturnTimer() {
 }
 
 function spinCarouselToIndex(targetIndex, options = {}) {
+  spinCarouselToSelection(state.selectedDayId, targetIndex, options);
+}
+
+function spinCarouselToSelection(targetDayId, targetIndex, options = {}) {
   const slots = getSlotsForDay(state.selectedDayId);
-  if (!slots.length) {
+  const targetSlots = getSlotsForDay(targetDayId);
+  if (!slots.length || !targetSlots.length || targetIndex < 0 || targetIndex >= targetSlots.length) {
     return;
   }
-  const step = getShortestCarouselStep(state.selectedIndex, targetIndex, slots.length, options.returning ? 12 : 3);
+  const step = targetDayId === state.selectedDayId
+    ? getShortestCarouselStep(state.selectedIndex, targetIndex, slots.length, options.returning ? slots.length : 3)
+    : getShortestCarouselStepToSelection(targetDayId, targetIndex);
   if (step !== 0) {
     spinCarouselBy(step, {
-      maxStep: options.returning ? 12 : 3,
+      maxStep: options.returning ? getTotalCarouselSlotCount() : 3,
       velocity: 0.28,
       scheduleReturn: false
     });
@@ -696,6 +700,33 @@ function getShortestCarouselStep(fromIndex, toIndex, total, maxStep = 3) {
   if (step > total / 2) step -= total;
   if (step < -total / 2) step += total;
   return Math.max(-maxStep, Math.min(maxStep, step));
+}
+
+function getTotalCarouselSlotCount() {
+  return weekdayOrder.reduce((total, dayId) => total + getSlotsForDay(dayId).length, 0);
+}
+
+function getCarouselGlobalIndex(dayId, slotIndex) {
+  let total = 0;
+  for (const currentDayId of weekdayOrder) {
+    if (currentDayId === dayId) {
+      return total + slotIndex;
+    }
+    total += getSlotsForDay(currentDayId).length;
+  }
+  return slotIndex;
+}
+
+function getShortestCarouselStepToSelection(targetDayId, targetIndex) {
+  const total = getTotalCarouselSlotCount();
+  if (!total) return 0;
+
+  const fromGlobal = getCarouselGlobalIndex(state.selectedDayId, state.selectedIndex);
+  const toGlobal = getCarouselGlobalIndex(targetDayId, targetIndex);
+  let step = toGlobal - fromGlobal;
+  if (step > total / 2) step -= total;
+  if (step < -total / 2) step += total;
+  return step;
 }
 
 function getAdjacentDayId(dayId, direction) {
