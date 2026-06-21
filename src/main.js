@@ -635,14 +635,14 @@ function spinCarouselToSelection(targetDayId, targetIndex, options = {}) {
     if (options.returning && Math.abs(step) > 1) {
       spinCarouselBy(Math.sign(step), {
         maxStep: 1,
-        duration: 680,
+        duration: 340,
         velocity: 0.12,
         scheduleReturn: false,
         onComplete: () => {
           clearCarouselReturnTimer();
           state.carouselReturnTimer = window.setTimeout(() => {
             spinCarouselToSelection(targetDayId, targetIndex, options);
-          }, 90);
+          }, 45);
         }
       });
       return;
@@ -650,7 +650,7 @@ function spinCarouselToSelection(targetDayId, targetIndex, options = {}) {
 
     spinCarouselBy(step, {
       maxStep: options.returning ? 1 : 3,
-      duration: options.returning ? 680 : undefined,
+      duration: options.returning ? 340 : undefined,
       velocity: options.returning ? 0.12 : 0.28,
       scheduleReturn: false
     });
