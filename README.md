@@ -4,6 +4,15 @@ Landingpage für `ai-radio.cc` mit Live-Player, aktueller Sendung, Programmkarus
 
 Die Seite ist eine Vite-App mit Vanilla JavaScript, CSS, Three.js für die drehende Hero-Sphäre und Lucide-Icons.
 
+## Aktueller Funktionsstand
+
+- Mehrsprachige Oberfläche mit Sprachumschalter im Kopfbereich.
+- Hell-/Dunkelmodus bleibt im Browser gespeichert.
+- Programmkarussell läuft als durchgehende Wochenliste: Beim Wechsel von 23:00 auf 00:00 sind die Sendungen des nächsten Tages schon während der Bewegung sichtbar, rückwärts entsprechend.
+- Schnelle Pfeiltasten- und Button-Eingaben werden gepuffert, damit mehrere schnelle Klicks mehrere Kartenwechsel auslösen.
+- Nach manueller Karussell-Navigation läuft die Vorschau nach 5 Sekunden automatisch zur Live-Sendung zurück.
+- Community-Einträge und E-Mail-Abonnenten werden serverseitig auf dem Pi4 gespeichert und dürfen beim Deployment nicht gelöscht werden.
+
 ## Entwicklung
 
 ```bash
@@ -30,7 +39,7 @@ src/styles.css             Layout, Theme, responsive Darstellung
 public/data/program.json   Programmdaten und Tagespläne
 public/assets/covers/      Hero- und Coverbilder der Sendungen
 public/assets/img/         App-/Logo-Bilder
-podcast/ai-radio/textbooks Textbook-App mit Liedtexten und optimierten Covern
+public/podcast/ai-radio/   Podcast-Seite, Feed, Episoden und Textbook-App
 ```
 
 ## Programm pflegen
@@ -68,6 +77,7 @@ Verifikation:
 ```bash
 ssh pi4 'curl -fsS http://127.0.0.1:8080/ | sed -n "1,24p"'
 curl -fsS https://ai-radio.cc/ | sed -n '1,24p'
+curl -fsS https://ai-radio.cc/api/health
 ```
 
 ## Hinweise
