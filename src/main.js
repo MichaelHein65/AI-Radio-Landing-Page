@@ -1446,6 +1446,7 @@ function bindEvents() {
       state.selectedDayId = button.dataset.day;
       state.selectedIndex = state.selectedDayId === weekdayOrder[new Date().getDay()] ? getCurrentSlotIndex() : 0;
       render();
+      scheduleCarouselReturn();
     });
   });
 
@@ -1712,7 +1713,7 @@ function scheduleCarouselReturn() {
       return;
     }
     spinCarouselToSelection(todayId, currentIndex, { returning: true });
-  }, 5000);
+  }, 8000);
 }
 
 function clearCarouselReturnTimer() {
