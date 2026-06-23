@@ -1643,7 +1643,7 @@ function spinCarouselBy(step, options = {}) {
 
   const tick = (now) => {
     const t = Math.min(1, (now - startTime) / duration);
-    const eased = easeOutQuint(t);
+    const eased = typeof options.easing === "function" ? options.easing(t) : easeOutQuint(t);
     const progress = startProgress + (targetProgress - startProgress) * eased;
     state.carouselDragProgress = progress;
     paintCarouselFrame(progress);
@@ -1736,25 +1736,10 @@ function spinCarouselToSelection(targetDayId, targetIndex, options = {}) {
     ? getShortestCarouselStep(state.selectedIndex, targetIndex, slots.length, options.returning ? slots.length : 3)
     : getShortestCarouselStepToSelection(targetDayId, targetIndex);
   if (step !== 0) {
-    if (options.returning && Math.abs(step) > 1) {
-      spinCarouselBy(Math.sign(step), {
-        maxStep: 1,
-        duration: 340,
-        velocity: 0.12,
-        scheduleReturn: false,
-        onComplete: () => {
-          clearCarouselReturnTimer();
-          state.carouselReturnTimer = window.setTimeout(() => {
-            spinCarouselToSelection(targetDayId, targetIndex, options);
-          }, 45);
-        }
-      });
-      return;
-    }
-
     spinCarouselBy(step, {
-      maxStep: options.returning ? 1 : 3,
-      duration: options.returning ? 340 : undefined,
+      maxStep: options.returning ? getTotalCarouselSlotCount() : 3,
+      duration: options.returning ? getCarouselReturnDuration(step) : undefined,
+      easing: options.returning ? easeInOutParabolic : undefined,
       velocity: options.returning ? 0.12 : 0.28,
       scheduleReturn: false
     });
@@ -1904,6 +1889,11 @@ function getShortestCarouselStepToSelection(targetDayId, targetIndex) {
   return step;
 }
 
+function getCarouselReturnDuration(step) {
+  const distance = Math.abs(step);
+  return Math.max(820, Math.min(3200, 640 + distance * 155));
+}
+
 function getAdjacentDayId(dayId, direction) {
   const index = weekdayOrder.indexOf(dayId);
   if (index < 0) return dayId;
@@ -1940,6 +1930,13 @@ function resolveCarouselSelection(step) {
 
 function easeOutQuint(value) {
   return 1 - Math.pow(1 - value, 5);
+}
+
+function easeInOutParabolic(value) {
+  if (value < 0.5) {
+    return 2 * value * value;
+  }
+  return 1 - 2 * (1 - value) * (1 - value);
 }
 
 function getCarouselPose(relative) {
