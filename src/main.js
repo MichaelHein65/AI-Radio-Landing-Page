@@ -1029,6 +1029,7 @@ const state = {
   carouselReturnTimer: 0,
   carouselIsSpinning: false,
   carouselQueuedStep: 0,
+  carouselQueuedScheduleReturn: false,
   playbackStarting: false,
   playbackRequested: false,
   playerLockedByOther: false,
@@ -1441,6 +1442,7 @@ function bindEvents() {
     button.addEventListener("click", () => {
       clearCarouselReturnTimer();
       state.carouselQueuedStep = 0;
+      state.carouselQueuedScheduleReturn = false;
       state.selectedDayId = button.dataset.day;
       state.selectedIndex = state.selectedDayId === weekdayOrder[new Date().getDay()] ? getCurrentSlotIndex() : 0;
       render();
@@ -1493,6 +1495,7 @@ function bindEvents() {
     clearCarouselReturnTimer();
     state.carouselIsSpinning = false;
     state.carouselQueuedStep = 0;
+    state.carouselQueuedScheduleReturn = false;
     dragStart = event.clientX;
     dragCurrent = event.clientX;
     dragStartTime = event.timeStamp;
@@ -1614,6 +1617,7 @@ function spinCarouselBy(step, options = {}) {
   if (state.carouselIsSpinning && options.queue !== false) {
     const maxQueuedStep = Number.isFinite(options.maxQueuedStep) ? Math.max(1, options.maxQueuedStep) : 12;
     state.carouselQueuedStep = Math.max(-maxQueuedStep, Math.min(maxQueuedStep, state.carouselQueuedStep + Math.round(step)));
+    state.carouselQueuedScheduleReturn = state.carouselQueuedScheduleReturn || Boolean(options.scheduleReturn);
     clearCarouselReturnTimer();
     return;
   }
@@ -1662,13 +1666,16 @@ function spinCarouselBy(step, options = {}) {
       updateDayTabsUi();
       updateScheduleUi();
     }
-    if (options.scheduleReturn) {
-      scheduleCarouselReturn();
-    }
     if (typeof options.onComplete === "function") {
       options.onComplete();
     }
-    continueQueuedCarouselSpin(options);
+    if (state.carouselQueuedStep !== 0) {
+      continueQueuedCarouselSpin(options);
+      return;
+    }
+    if (options.scheduleReturn) {
+      scheduleCarouselReturn();
+    }
   };
 
   state.carouselAnimationFrame = window.requestAnimationFrame(tick);
@@ -1679,6 +1686,11 @@ function continueQueuedCarouselSpin(previousOptions = {}) {
 
   const step = Math.sign(state.carouselQueuedStep);
   state.carouselQueuedStep -= step;
+  const shouldScheduleReturn = Boolean(previousOptions.scheduleReturn || state.carouselQueuedScheduleReturn);
+  const isFinalQueuedStep = state.carouselQueuedStep === 0;
+  if (isFinalQueuedStep) {
+    state.carouselQueuedScheduleReturn = false;
+  }
   spinCarouselBy(step, {
     ...previousOptions,
     queue: false,
@@ -1686,7 +1698,7 @@ function continueQueuedCarouselSpin(previousOptions = {}) {
     maxStep: 1,
     duration: 280,
     velocity: 0.18,
-    scheduleReturn: state.carouselQueuedStep === 0 && Boolean(previousOptions.scheduleReturn)
+    scheduleReturn: isFinalQueuedStep && shouldScheduleReturn
   });
 }
 
