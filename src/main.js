@@ -17,6 +17,13 @@ import {
   createIcons
 } from "lucide";
 import "./styles.css";
+import { LANDING_COPY } from "./landing-copy.js";
+let youtubeVideos = [];
+let youtubeOpen = false;
+let youtubeSyncTimer;
+let youtubeSyncRequest;
+let youtubeSession = 0;
+import { VideoQueue } from "./youtube-player.js";
 
 const iconSet = {
   CalendarDays,
@@ -1010,7 +1017,14 @@ const SHOW_DESCRIPTION_I18N = {
   }
 };
 
+for (const [locale, copy] of Object.entries(LANDING_COPY)) Object.assign(I18N[locale], copy);
+const YOUTUBE_PLAYLIST_URL = "https://www.youtube.com/watch?v=cPAO5vW0ztQ&list=PLX76Ja8Hu-0g";
+const videoQueue = new VideoQueue({ videos: youtubeVideos, onChange: updateYouTubeUi, beforePlay: stopRadioForVideo });
+let playerObserver;
 const app = document.querySelector("#app");
+
+const WORLD_CUP_HERO_IMAGE = "/assets/heroes/wm-2026.png";
+const WORLD_CUP_HERO_END_DATE = "2026-07-20";
 const state = {
   config: null,
   selectedDayId: null,
@@ -1129,7 +1143,7 @@ function render() {
   const selectedSlot = selectedSlots[state.selectedIndex] ?? activeSlot;
   const selectedShow = selectedSlot.show;
 
-  app.innerHTML = `
+  const markup = `
     <header class="site-header">
       <a class="brand" href="#top" aria-label="${station.name}">
         <img src="/assets/img/ai-radio-icon.webp" alt="" decoding="async" />
@@ -1139,6 +1153,8 @@ function render() {
         <a href="#programm">${t("nav.program")}</a>
         <a href="#community">${t("nav.community")}</a>
         <a href="${station.podcastUrl}">${t("nav.podcast")}</a>
+        <a href="#videos">YouTube</a>
+        <a href="/karussell/">Karussell</a>
       </nav>
       <div class="header-actions">
         ${renderLanguageSwitcher()}
@@ -1150,71 +1166,19 @@ function render() {
     </header>
 
     <main id="top">
-      <section class="hero-band">
-        <div class="hero-inner">
-          <div class="hero-copy">
-            <p class="kicker"><i data-lucide="radio"></i> ${t("hero.kicker")}</p>
-            <h1>Mike's AI Radio</h1>
-            <p class="lead">${t("hero.lead")}</p>
-
-            <div class="player-panel" aria-label="${t("hero.playerAria")}">
-              <img class="now-show-thumb" id="heroNowCover" src="${activeSlot.show.cover}" alt="" decoding="async" />
-              <div>
-                <span class="panel-label">${t("hero.now")}</span>
-                <strong id="heroNowTitle">${escapeHtml(activeSlot.show.shortTitle)}</strong>
-                <small id="heroNowMeta">${formatHourRange(activeSlot.hour)} · ${escapeHtml(activeSlot.show.subtitle)}</small>
-                <small class="now-track" id="heroNowTrack">${escapeHtml(getNowPlayingText())}</small>
-              </div>
-              <div class="player-actions">
-                <button class="primary-action" id="playToggle" type="button" ${state.playbackStarting ? "disabled" : ""}>
-                  <i data-lucide="${state.isPlaying ? "pause" : "play"}"></i>
-                  <span>${getPlaybackButtonText()}</span>
-                </button>
-              </div>
-            </div>
-
-            <div class="next-show-strip" aria-label="${t("hero.nextAria")}">
-              <img id="nextShowCover" src="${nextSlot.show.cover}" alt="" loading="lazy" decoding="async" />
-              <div>
-                <span>${t("hero.next")}</span>
-                <strong id="nextShowTitle">${escapeHtml(nextSlot.show.shortTitle)}</strong>
-                <small id="nextShowTime">${formatHourRange(nextSlot.hour)} · ${escapeHtml(nextSlot.show.subtitle)}</small>
-              </div>
-            </div>
-            <div class="media-links" aria-label="${t("hero.mediaAria")}">
-              <a class="media-link podcast-link" href="${station.podcastUrl}">
-                <i data-lucide="headphones"></i>
-                <span>
-                  <strong>${t("nav.podcast")}</strong>
-                  <small>${t("hero.podcastText")}</small>
-                </span>
-              </a>
-              <a class="media-link textbook-link" id="textbookLink" href="${getTextbookUrl(activeSlot)}" target="_blank" rel="noopener">
-                <i data-lucide="book-open"></i>
-                <span>
-                  <strong>Textbooks</strong>
-                  <small>${t("hero.textbooksText")}</small>
-                </span>
-              </a>
-            </div>
-          </div>
-
-          <div class="hero-stage" aria-label="${t("hero.sphereAria")}">
-            <div id="sphereMount" class="sphere-mount"></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="program-band" id="programm">
+      <section class="program-band" id="programm" aria-label="${t("nav.program")}">
         <div class="section-heading">
           <div>
             <p class="kicker"><i data-lucide="calendar-days"></i> ${t("program.kicker")}</p>
-            <h2>${t("program.title")}</h2>
+            <h1>${t("program.title")}</h1>
           </div>
+          <div class="program-actions">
+          <button class="secondary-action" id="returnToLive" type="button"><i data-lucide="radio"></i><span>${t("landing.live")}</span></button>
           <button class="secondary-action" id="tableToggle" type="button">
             <i data-lucide="${state.showTable ? "images" : "table-2"}"></i>
             <span>${state.showTable ? t("program.showCarousel") : t("program.showTable")}</span>
           </button>
+          </div>
         </div>
 
         <div class="day-tabs" role="tablist" aria-label="${t("program.weekdaysAria")}">
@@ -1264,6 +1228,90 @@ function render() {
         </div>
       </section>
 
+      <section class="video-band" id="videos" aria-labelledby="videoTitle">
+        <div class="video-feature">
+          <div class="video-art" aria-hidden="true">
+            <img src="/assets/heroes/metal-2bc3ef960e21.png" alt="" loading="lazy" decoding="async" width="320" height="320" />
+            <span class="video-play"><i data-lucide="play"></i></span>
+          </div>
+          <div class="video-copy">
+            <span class="video-eyebrow">YouTube · ${t("landing.playlist")}</span>
+            <h2 id="videoTitle" data-video-copy="landing.youtubeTitle">${t("landing.youtubeTitle")}</h2>
+            <p data-video-copy="landing.youtubeCopy">${t("landing.youtubeCopy")}</p>
+          </div>
+          <div class="video-cta">
+            <button class="video-load" id="youtubeToggle" type="button" aria-expanded="false" aria-controls="youtubeMount">${t("landing.videoLoad")}</button>
+          </div>
+        </div>
+        <p class="video-privacy" data-video-copy="landing.videoPrivacy">${t("landing.videoPrivacy")}</p>
+        <div id="youtubeMount" class="youtube-mount" hidden></div>
+        <div class="video-footer">
+          <a href="${YOUTUBE_PLAYLIST_URL}" target="_blank" rel="noopener noreferrer"><span data-video-copy="landing.videoExternal">${t("landing.videoExternal")}</span> ↗</a>
+          <a href="/datenschutz.html#youtube" target="_blank" rel="noopener" data-video-copy="legal.privacy">${t("legal.privacy")}</a>
+        </div>
+      </section>
+
+      <section class="hero-band" id="radio">
+        <div class="hero-inner">
+          <div class="hero-copy">
+            <p class="kicker"><i data-lucide="radio"></i> ${t("hero.kicker")}</p>
+            <h2 class="station-title">Mike's AI Radio</h2>
+            <p class="lead">${t("hero.lead")}</p>
+
+            <div class="player-panel" aria-label="${t("hero.playerAria")}">
+              <img class="now-show-thumb" id="heroNowCover" src="${activeSlot.show.cover}" alt="" decoding="async" />
+              <div>
+                <span class="panel-label">${t("hero.now")}</span>
+                <strong id="heroNowTitle">${escapeHtml(activeSlot.show.shortTitle)}</strong>
+                <small id="heroNowMeta">${formatHourRange(activeSlot.hour)} · ${escapeHtml(activeSlot.show.subtitle)}</small>
+                <small class="now-track" id="heroNowTrack">${escapeHtml(getNowPlayingText())}</small>
+              </div>
+              <div class="player-actions">
+                <button class="primary-action" id="playToggle" data-play-toggle type="button" ${state.playbackStarting ? "disabled" : ""}>
+                  <i data-lucide="${state.isPlaying ? "pause" : "play"}"></i>
+                  <span>${getPlaybackButtonText()}</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="next-show-strip" aria-label="${t("hero.nextAria")}">
+              <img id="nextShowCover" src="${nextSlot.show.cover}" alt="" loading="lazy" decoding="async" />
+              <div>
+                <span>${t("hero.next")}</span>
+                <strong id="nextShowTitle">${escapeHtml(nextSlot.show.shortTitle)}</strong>
+                <small id="nextShowTime">${formatHourRange(nextSlot.hour)} · ${escapeHtml(nextSlot.show.subtitle)}</small>
+              </div>
+            </div>
+            <div class="media-links" aria-label="${t("hero.mediaAria")}">
+              <a class="media-link podcast-link" href="${station.podcastUrl}">
+                <i data-lucide="headphones"></i>
+                <span>
+                  <strong>${t("nav.podcast")}</strong>
+                  <small>${t("hero.podcastText")}</small>
+                </span>
+              </a>
+              <a class="media-link textbook-link" id="textbookLink" href="${getTextbookUrl(activeSlot)}" target="_blank" rel="noopener">
+                <i data-lucide="book-open"></i>
+                <span>
+                  <strong>Textbooks</strong>
+                  <small>${t("hero.textbooksText")}</small>
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-stage" aria-label="${t("hero.sphereAria")}">
+            <div id="sphereMount" class="sphere-mount">
+              <img class="sphere-fallback" src="${getHeroSphereImage()}" alt="" decoding="async" />
+            </div>
+            <div class="sphere-now-playing" aria-live="polite" aria-atomic="true">
+              <span>${t("stats.nowPlaying")}</span>
+              <strong id="sphereNowPlayingTitle">${escapeHtml(getNowPlayingText())}</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="listen-band">
         <div class="listen-grid">
           <article class="stat-tile">
@@ -1287,6 +1335,7 @@ function render() {
             <p class="kicker"><i data-lucide="message-circle"></i> ${t("community.kicker")}</p>
             <h2>${t("community.title")}</h2>
             <p>${t("community.copy")}</p>
+            <p><a href="mailto:info@ai-radio.cc">info@ai-radio.cc</a></p>
           </div>
           <form class="comment-form" id="commentForm">
             <div class="form-row">
@@ -1329,8 +1378,21 @@ function render() {
       </section>
     </main>
 
+    <aside class="player-dock" id="playerDock" aria-label="${t("hero.playerAria")}">
+      <a class="dock-track" href="#radio">
+        <span class="dock-live"><span aria-hidden="true"></span>${t("hero.now")}</span>
+        <strong id="dockTrack">${escapeHtml(getNowPlayingText())}</strong>
+      </a>
+      <button class="primary-action" id="dockPlayToggle" data-play-toggle type="button" ${state.playbackStarting ? "disabled" : ""}>
+        <i data-lucide="${state.isPlaying ? "pause" : "play"}"></i><span>${getPlaybackButtonText()}</span>
+      </button>
+    </aside>
+
     <footer class="site-footer">
+      <div>
       <span>Mike's AI Radio ${new Date().getFullYear()}</span>
+        <br><a href="mailto:info@ai-radio.cc">info@ai-radio.cc</a>
+      </div>
       <nav aria-label="${t("legal.aria")}">
         <a href="/impressum.html">${t("legal.imprint")}</a>
         <a href="/datenschutz.html">${t("legal.privacy")}</a>
@@ -1339,14 +1401,206 @@ function render() {
     </footer>
   `;
 
+  renderAppMarkup(markup);
   createIcons({ icons: iconSet });
   bindEvents();
+  observePlayer();
   syncAudioElement();
   updateMediaSession();
   updateClock();
   state.sphere?.dispose?.();
-  state.sphere = initHeroSphere(document.querySelector("#sphereMount"), getActiveSlot().show.cover);
+  state.sphere = initHeroSphere(document.querySelector("#sphereMount"), getHeroSphereImage());
 }
+
+// Keep the playing iframe in its original DOM position when other sections update.
+function renderAppMarkup(markup) {
+  const video = app.querySelector("#videos");
+  if (!video || !youtubeOpen) {
+    app.innerHTML = markup;
+    return;
+  }
+  const template = document.createElement("template");
+  template.innerHTML = markup;
+  const currentSections = [...app.querySelector("main").children];
+  [...template.content.querySelector("main").children].forEach((section, index) => {
+    if (section.id !== "videos") currentSections[index].replaceWith(section);
+  });
+  for (const element of [...app.children]) {
+    if (element.tagName !== "MAIN") {
+      const replacement = [...template.content.children].find(next => next.tagName === element.tagName);
+      if (replacement) element.replaceWith(replacement);
+    }
+  }
+  video.querySelectorAll("[data-video-copy]").forEach(element => {
+    element.textContent = t(element.dataset.videoCopy);
+  });
+  video.querySelector("#youtubeToggle").textContent = t("landing.videoClose");
+  updateYouTubeUi();
+}
+
+function stopRadioForVideo() {
+  state.playbackRequested = false;
+  state.playbackStarting = false;
+  state.isPlaying = false;
+  clearStreamRetryTimer();
+  stopCurrentAudioStream();
+  releasePlayerLock();
+  updatePlaybackUi();
+  // Let YouTube own the OS media controls while it is open.
+  if ("mediaSession" in navigator) {
+    navigator.mediaSession.setActionHandler?.("play", null);
+    navigator.mediaSession.setActionHandler?.("pause", null);
+    navigator.mediaSession.metadata = null;
+    navigator.mediaSession.playbackState = "none";
+    state.mediaSessionKey = "";
+  }
+}
+
+function closeYouTubePlayer({ focus = false } = {}) {
+  youtubeOpen = false;
+  ++youtubeSession;
+  window.clearInterval(youtubeSyncTimer);
+  youtubeSyncRequest?.abort();
+  youtubeSyncRequest = null;
+  videoQueue.close();
+  const mount = document.querySelector("#youtubeMount");
+  if (!mount) return;
+  mount.replaceChildren();
+  mount.hidden = true;
+  document.body.classList.remove("has-inline-video");
+  const button = document.querySelector("#youtubeToggle");
+  button.textContent = t("landing.videoLoad");
+  button.setAttribute("aria-expanded", "false");
+  if (focus) button.focus({ preventScroll: true });
+  updateMediaSession();
+}
+
+function updateYouTubeUi() {
+  const mount = document.querySelector("#youtubeMount");
+  if (!mount || videoQueue.status === "closed") return;
+  const status = mount.querySelector("#youtubeStatus");
+  if (!status || !youtubeVideos.length) return;
+  const { index, status: playbackStatus } = videoQueue;
+  status.textContent = t(`landing.video_${playbackStatus}`);
+  mount.querySelector("#youtubeCurrentTitle").textContent = youtubeVideos[index].title;
+  mount.querySelector("#youtubePosition").textContent = `${index + 1} / ${youtubeVideos.length}`;
+  mount.querySelectorAll(".playlist-item").forEach((button, i) => {
+    button.setAttribute("aria-current", String(i === index));
+    button.classList.toggle("is-unavailable", videoQueue.unavailable.has(i));
+  });
+  const retry = mount.querySelector("#youtubeRetry");
+  retry.hidden = !["error", "blocked", "unavailable"].includes(playbackStatus);
+  retry.textContent = t(playbackStatus === "blocked" ? "landing.videoResume" : "landing.videoRetry");
+  mount.querySelector("#youtubeNext").disabled = index === youtubeVideos.length - 1;
+  mount.querySelector("#youtubePrevious").disabled = index === 0;
+  mount.querySelector("#youtubeCurrentLink").href = `https://www.youtube.com/watch?v=${youtubeVideos[index].id}&list=PLX76Ja8Hu-0g`;
+}
+
+function toggleYouTubePlayer() {
+  const mount = document.querySelector("#youtubeMount");
+  if (youtubeOpen) {
+    closeYouTubePlayer({ focus: true });
+    return;
+  }
+  youtubeOpen = true;
+  ++youtubeSession;
+  mount.innerHTML = `
+    <div class="youtube-stage">
+      <div id="youtubeFrame" class="youtube-frame"></div>
+      <div class="youtube-caption"><span class="video-eyebrow" id="youtubePosition"></span><h3 id="youtubeCurrentTitle"></h3></div>
+      <div class="youtube-controls">
+        <button id="youtubePrevious" type="button" data-video-copy="landing.videoPrevious">${t("landing.videoPrevious")}</button>
+        <button id="youtubeNext" type="button" data-video-copy="landing.videoNext">${t("landing.videoNext")}</button>
+        <a id="youtubeCurrentLink" target="_blank" rel="noopener noreferrer" data-video-copy="landing.videoExternal">${t("landing.videoExternal")}</a>
+      </div>
+      <div class="youtube-feedback"><p id="youtubeStatus" role="status" aria-live="polite"></p><button id="youtubeRetry" type="button" hidden></button></div>
+    </div>
+    <aside class="youtube-playlist" aria-labelledby="youtubeListTitle">
+      <div class="playlist-heading"><h3 id="youtubeListTitle" data-video-copy="landing.playlist">${t("landing.playlist")}</h3><span id="playlistCount"></span></div>
+      <div class="playlist-sync"><p id="playlistSyncStatus" role="status"></p><button id="playlistRefresh" type="button" data-video-copy="landing.videoRetry" hidden>${t("landing.videoRetry")}</button></div>
+      <ol class="playlist-items"></ol>
+    </aside>`;
+  mount.hidden = false;
+  document.body.classList.add("has-inline-video");
+  const button = document.querySelector("#youtubeToggle");
+  button.textContent = t("landing.videoClose");
+  button.setAttribute("aria-expanded", "true");
+  mount.onclick = event => {
+    const item = event.target.closest("[data-video-index]");
+    if (item) videoQueue.select(Number(item.dataset.videoIndex));
+  };
+  mount.querySelector("#youtubePrevious").onclick = () => videoQueue.select(videoQueue.index - 1);
+  mount.querySelector("#youtubeNext").onclick = () => videoQueue.next();
+  mount.querySelector("#youtubeRetry").onclick = () => videoQueue.retry();
+  mount.querySelector("#playlistRefresh").onclick = () => refreshYouTubePlaylist();
+  void refreshYouTubePlaylist();
+  youtubeSyncTimer = window.setInterval(() => {
+    if (!document.hidden) void refreshYouTubePlaylist();
+  }, 60000);
+  mount.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+}
+
+async function refreshYouTubePlaylist() {
+  if (!youtubeOpen || youtubeSyncRequest) return;
+  const session = youtubeSession;
+  const controller = new AbortController();
+  youtubeSyncRequest = controller;
+  const timer = window.setTimeout(() => controller.abort(), 20000);
+  const mount = document.querySelector("#youtubeMount");
+  const syncStatus = mount.querySelector("#playlistSyncStatus");
+  const retry = mount.querySelector("#playlistRefresh");
+  const setSyncStatus = key => {
+    syncStatus.dataset.videoCopy = `landing.${key}`;
+    syncStatus.textContent = t(`landing.${key}`);
+  };
+  if (!mount.querySelector(".playlist-item")) setSyncStatus("playlistLoading");
+  retry.hidden = true;
+  try {
+    const response = await fetch("/api/youtube-playlist", { cache: "no-store", signal: controller.signal });
+    if (!response.ok) throw new Error("Playlist request failed");
+    const data = await response.json();
+    if (!Array.isArray(data.videos) || data.videos.some(video => !/^[\w-]{11}$/.test(video.id) || typeof video.title !== "string" || typeof video.duration !== "string")) throw new Error("Invalid playlist");
+    if (!youtubeOpen || session !== youtubeSession) return;
+    const changed = JSON.stringify(youtubeVideos) !== JSON.stringify(data.videos);
+    if (changed || !mount.querySelector(".playlist-item")) {
+      youtubeVideos = data.videos;
+      mount.querySelector("#playlistCount").textContent = `${youtubeVideos.length} Videos`;
+      mount.querySelector(".playlist-items").innerHTML = youtubeVideos.map((video, index) => `
+        <li><button class="playlist-item" type="button" data-video-index="${index}" aria-current="false">
+          <span class="playlist-number">${String(index + 1).padStart(2, "0")}</span>
+          <span class="playlist-thumb"><img src="https://i.ytimg.com/vi/${video.id}/mqdefault.jpg" alt="" loading="lazy" decoding="async" width="120" height="68" /><span>${escapeHtml(video.duration)}</span></span>
+          <span class="playlist-title">${escapeHtml(video.title)}</span>
+        </button></li>`).join("");
+      videoQueue.replaceVideos(youtubeVideos);
+    }
+    if (!youtubeVideos.length) {
+      mount.querySelector("#youtubeCurrentTitle").textContent = "";
+      mount.querySelector("#youtubePosition").textContent = "";
+      mount.querySelector("#youtubeStatus").textContent = "";
+      mount.querySelector("#youtubePrevious").disabled = true;
+      mount.querySelector("#youtubeNext").disabled = true;
+      mount.querySelector("#youtubeRetry").hidden = true;
+      mount.querySelector("#youtubeCurrentLink").href = YOUTUBE_PLAYLIST_URL;
+    } else if (videoQueue.status === "closed") {
+      void videoQueue.open(mount.querySelector("#youtubeFrame"), 0);
+    }
+    updateYouTubeUi();
+    setSyncStatus(data.stale ? "playlistStale" : youtubeVideos.length ? "playlistCurrent" : "playlistEmpty");
+    retry.hidden = !data.stale;
+  } catch {
+    if (youtubeOpen && session === youtubeSession) {
+      setSyncStatus(mount.querySelector(".playlist-item") ? "playlistStale" : "playlistFailed");
+      retry.hidden = false;
+    }
+  } finally {
+    window.clearTimeout(timer);
+    if (youtubeSyncRequest === controller) youtubeSyncRequest = null;
+  }
+}
+
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden && youtubeOpen) void refreshYouTubePlaylist();
+});
 
 function renderLanguageSwitcher() {
   const languages = [
@@ -1416,8 +1670,29 @@ function renderCarousel() {
   }).join("");
 }
 
+function observePlayer() {
+  playerObserver?.disconnect();
+  const panel = document.querySelector(".player-panel");
+  const dock = document.querySelector("#playerDock");
+  if (!panel || !dock) return;
+  document.body.classList.add("has-player-dock");
+  playerObserver = new IntersectionObserver(([entry]) => {
+    dock.hidden = entry.isIntersecting;
+    document.body.classList.toggle("has-player-dock", !entry.isIntersecting);
+  }, { threshold: 0.25 });
+  playerObserver.observe(panel);
+}
+
 function bindEvents() {
-  document.querySelector("#playToggle")?.addEventListener("click", togglePlayback);
+  document.querySelector("#youtubeToggle").onclick = toggleYouTubePlayer;
+  document.querySelectorAll("[data-play-toggle]").forEach(button => button.addEventListener("click", togglePlayback));
+  document.querySelector("#returnToLive")?.addEventListener("click", () => {
+    clearCarouselReturnTimer();
+    state.selectedDayId = weekdayOrder[new Date().getDay()];
+    state.selectedIndex = getCurrentSlotIndex();
+    render();
+    document.querySelector("#returnToLive")?.focus({ preventScroll: true });
+  });
   document.querySelector("#themeToggle")?.addEventListener("click", toggleTheme);
   document.querySelectorAll("[data-locale]").forEach((button) => {
     button.addEventListener("click", () => {
@@ -1436,6 +1711,7 @@ function bindEvents() {
   document.querySelector("#tableToggle")?.addEventListener("click", () => {
     state.showTable = !state.showTable;
     render();
+    scheduleCarouselReturn();
   });
 
   document.querySelectorAll(".day-tab[data-day]").forEach((button) => {
@@ -1560,6 +1836,7 @@ function bindEvents() {
     state.carouselDragProgress = 0;
     carouselShell.classList.remove("is-dragging");
     applyCarouselDrag(0);
+    scheduleCarouselReturn();
   });
 
   document.querySelectorAll(".show-card").forEach((button) => {
@@ -1592,6 +1869,7 @@ function bindScheduleRowEvents() {
       clearCarouselReturnTimer();
       state.selectedIndex = Number(button.dataset.index);
       render();
+      scheduleCarouselReturn();
     });
   });
 }
@@ -1604,14 +1882,17 @@ function moveSelection(step) {
 }
 
 function spinCarouselBy(step, options = {}) {
+  if (options.scheduleReturn) clearCarouselReturnTimer();
   const slots = getSlotsForDay(state.selectedDayId);
   if (!slots.length || step === 0) {
+    if (options.scheduleReturn) scheduleCarouselReturn();
     return;
   }
 
   const carouselShell = document.querySelector("#carouselShell");
   if (!carouselShell) {
     moveSelection(step);
+    if (options.scheduleReturn) scheduleCarouselReturn();
     return;
   }
 
@@ -1705,15 +1986,14 @@ function continueQueuedCarouselSpin(previousOptions = {}) {
 
 function scheduleCarouselReturn() {
   clearCarouselReturnTimer();
-
   state.carouselReturnTimer = window.setTimeout(() => {
+    state.carouselReturnTimer = 0;
+    // Resolve the live slot at expiry, including an hour/day rollover while idle.
     const todayId = weekdayOrder[new Date().getDay()];
     const currentIndex = getCurrentSlotIndex();
-    if (currentIndex < 0 || (state.selectedDayId === todayId && currentIndex === state.selectedIndex)) {
-      return;
-    }
+    if (currentIndex < 0 || (state.selectedDayId === todayId && state.selectedIndex === currentIndex)) return;
     spinCarouselToSelection(todayId, currentIndex, { returning: true });
-  }, 8000);
+  }, 20000);
 }
 
 function clearCarouselReturnTimer() {
@@ -1986,6 +2266,7 @@ async function togglePlayback() {
   }
   state.lastPlaybackStartAttemptAt = now;
 
+  closeYouTubePlayer();
   acquirePlayerLock();
 
   try {
@@ -1997,6 +2278,7 @@ async function togglePlayback() {
     logPlayerEvent("play-attempt", { reason: "play" });
     setAudioStreamSource("play", { force: true });
     await state.audio.play();
+    if (!state.playbackRequested) return;
     state.isPlaying = true;
   } catch {
     logPlayerEvent("play-failed", { reason: "play" });
@@ -2387,6 +2669,8 @@ function setupAudioEventHandlers() {
   state.audio.preload = "none";
 
   state.audio.addEventListener("playing", () => {
+    window.aiRadioPlaybackStarted = true;
+    window.dispatchEvent(new Event("ai-radio:playing"));
     clearStreamRetryTimer();
     state.playbackStarting = false;
     state.isPlaying = true;
@@ -2407,20 +2691,49 @@ function setupAudioEventHandlers() {
     }
   });
 
-  state.audio.addEventListener("waiting", () => scheduleStreamReconnect("waiting", 2500));
-  state.audio.addEventListener("stalled", () => scheduleStreamReconnect("stalled", 1200));
-  state.audio.addEventListener("error", () => scheduleStreamReconnect("error", 400));
-  state.audio.addEventListener("ended", () => scheduleStreamReconnect("ended", 400));
+  // Safari may emit waiting/stalled while a live MP3 stream is still buffered and
+  // playing normally. Restarting the media element in response creates audible
+  // gaps and clicks, so only reconnect after a sustained, confirmed playback stall.
+  state.audio.addEventListener("waiting", () => scheduleStreamReconnect("waiting", 15000, {
+    requireConfirmedStall: true
+  }));
+  state.audio.addEventListener("stalled", () => scheduleStreamReconnect("stalled", 15000, {
+    requireConfirmedStall: true
+  }));
+  state.audio.addEventListener("error", () => scheduleStreamReconnect("error", 400, {
+    replacePendingRetry: true
+  }));
+  state.audio.addEventListener("ended", () => scheduleStreamReconnect("ended", 400, {
+    replacePendingRetry: true
+  }));
 }
 
-function scheduleStreamReconnect(reason, delayMs) {
+function scheduleStreamReconnect(reason, delayMs, options = {}) {
   if (!state.playbackRequested) return;
+  if (options.replacePendingRetry) clearStreamRetryTimer();
   if (state.streamRetryTimer) return;
   logPlayerEvent(`audio-${reason}`, { reason });
+  const playbackTimeAtSchedule = state.audio.currentTime;
   state.streamRetryTimer = window.setTimeout(() => {
     state.streamRetryTimer = 0;
+    if (options.requireConfirmedStall && hasPlaybackRecovered(playbackTimeAtSchedule)) {
+      logPlayerEvent(`audio-${reason}-recovered`, { reason });
+      return;
+    }
     restartStream(reason);
   }, delayMs);
+}
+
+function hasPlaybackRecovered(previousTime) {
+  if (!state.playbackRequested) return true;
+
+  const currentTime = state.audio.currentTime;
+  const playbackAdvanced = Number.isFinite(previousTime)
+    && Number.isFinite(currentTime)
+    && currentTime - previousTime > 0.25;
+  const hasPlayableBuffer = state.audio.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA;
+
+  return playbackAdvanced || hasPlayableBuffer;
 }
 
 function clearStreamRetryTimer() {
@@ -2514,17 +2827,13 @@ function createStreamSessionId() {
 }
 
 function updatePlaybackUi() {
-  const button = document.querySelector("#playToggle");
   const status = document.querySelector("#streamStatus");
-  if (status) {
-    status.textContent = getStreamStatusText();
+  if (status) status.textContent = getStreamStatusText();
+  for (const button of document.querySelectorAll("[data-play-toggle]")) {
+    button.disabled = state.playbackStarting;
+    button.innerHTML = `<i data-lucide="${state.isPlaying ? "pause" : "play"}"></i><span>${getPlaybackButtonText()}</span>`;
   }
-  if (!button) return;
-  button.disabled = state.playbackStarting;
-  button.innerHTML = `
-    <i data-lucide="${state.isPlaying ? "pause" : "play"}"></i>
-    <span>${getPlaybackButtonText()}</span>
-  `;
+  document.querySelector("#playerDock")?.classList.toggle("is-playing", state.isPlaying);
   createIcons({ icons: iconSet });
 }
 
@@ -2580,14 +2889,18 @@ async function refreshNowPlaying() {
 
 function updateNowPlayingUi() {
   const text = getNowPlayingText();
+  const dockTrack = document.querySelector("#dockTrack");
+  if (dockTrack) dockTrack.textContent = text;
   const heroTrack = document.querySelector("#heroNowTrack");
   if (heroTrack) heroTrack.textContent = text;
   const nowPlayingTitle = document.querySelector("#nowPlayingTitle");
   if (nowPlayingTitle) nowPlayingTitle.textContent = text;
+  const sphereNowPlayingTitle = document.querySelector("#sphereNowPlayingTitle");
+  if (sphereNowPlayingTitle) sphereNowPlayingTitle.textContent = text;
 }
 
 function updateMediaSession() {
-  if (!state.config) return;
+  if (!state.config || youtubeOpen) return;
   const station = state.config.station;
   const active = getActiveSlot();
   const track = String(state.nowPlaying?.track || "").trim();
@@ -2645,11 +2958,24 @@ function startTicks() {
       textbookLink.setAttribute("href", getTextbookUrl(active));
     }
     updateNowPlayingUi();
-    state.sphere?.setImage(active.show.cover);
+    state.sphere?.setImage(getHeroSphereImage());
     updateMediaSession();
     updateClock();
   }, 1000);
   state.nowPlayingTimer = window.setInterval(refreshNowPlaying, 5000);
+}
+
+function getHeroSphereImage() {
+  const berlinDate = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/Berlin",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).format(new Date());
+
+  return berlinDate < WORLD_CUP_HERO_END_DATE
+    ? WORLD_CUP_HERO_IMAGE
+    : getActiveSlot().show.cover;
 }
 
 function updateClock() {
@@ -2665,10 +2991,38 @@ function updateClock() {
 function initHeroSphere(container, imageUrl) {
   if (!container) return null;
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  const fallback = container.querySelector(".sphere-fallback");
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    return { setImage(url) { if (fallback) fallback.src = url; }, dispose() {} };
+  }
+  const showFallback = () => {
+    fallback?.classList.remove("is-hidden");
+    renderer?.domElement.classList.add("is-hidden");
+  };
+  const hideFallback = () => {
+    fallback?.classList.add("is-hidden");
+    renderer?.domElement.classList.remove("is-hidden");
+  };
+  const setFallbackImage = (nextImage) => {
+    if (fallback && nextImage) fallback.src = nextImage;
+  };
+
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  } catch (error) {
+    console.warn("WebGL is unavailable; using the static hero image.", error);
+    showFallback();
+    return {
+      setImage: setFallbackImage,
+      dispose() {}
+    };
+  }
+
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setClearColor(0x000000, 0);
   container.appendChild(renderer.domElement);
+  renderer.domElement.addEventListener("webglcontextlost", showFallback);
 
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 100);
@@ -2700,17 +3054,25 @@ function initHeroSphere(container, imageUrl) {
   function setImage(nextImage) {
     if (!nextImage || nextImage === activeImage) return;
     activeImage = nextImage;
-    loader.load(nextImage, (texture) => {
-      texture.colorSpace = THREE.SRGBColorSpace;
-      texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
-      const oldMap = material.map;
-      material.map = texture;
-      material.color.set(0xffffff);
-      material.emissive.set(0x2a2520);
-      material.emissiveIntensity = 0.38;
-      material.needsUpdate = true;
-      oldMap?.dispose();
-    });
+    setFallbackImage(nextImage);
+    showFallback();
+    loader.load(
+      nextImage,
+      (texture) => {
+        texture.colorSpace = THREE.SRGBColorSpace;
+        texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+        const oldMap = material.map;
+        material.map = texture;
+        material.color.set(0xffffff);
+        material.emissive.set(0x2a2520);
+        material.emissiveIntensity = 0.38;
+        material.needsUpdate = true;
+        oldMap?.dispose();
+        hideFallback();
+      },
+      undefined,
+      showFallback
+    );
   }
 
   function resize() {
@@ -2740,6 +3102,7 @@ function initHeroSphere(container, imageUrl) {
     material.map?.dispose();
     material.dispose();
     geometry.dispose();
+    renderer.domElement.removeEventListener("webglcontextlost", showFallback);
     renderer.dispose();
     renderer.domElement.remove();
   }

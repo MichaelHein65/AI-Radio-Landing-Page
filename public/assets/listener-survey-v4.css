@@ -1,0 +1,16 @@
+.listener-survey { box-sizing:border-box; width:min(440px,calc(100vw - 28px)); max-height:85dvh; overflow:auto; padding:26px; border:1px solid #8d7546; border-radius:20px; background:#192124; color:#f8f4e9; box-shadow:0 20px 80px #0008; font:16px/1.5 system-ui,sans-serif; }
+.listener-survey::backdrop { background:#0008; }
+.listener-survey h2 { font-size:1.3rem; line-height:1.35; margin:0 0 14px; color:inherit; }
+.listener-survey p { margin:12px 0; }
+.listener-survey a { color:#f4d398; display:block; margin-bottom:16px; }
+.listener-survey fieldset { border:0; padding:0; margin:0 0 16px; }
+.listener-survey legend { font-size:.85rem; margin-bottom:8px; }
+.listener-survey label { display:block; padding:10px 0; cursor:pointer; }
+.listener-survey input { margin-right:10px; accent-color:#edbd6f; }
+.listener-survey button { font:inherit; cursor:pointer; margin:8px 8px 0 0; padding:10px 14px; color:#191d20; background:#f0ce8c; border:1px solid transparent; border-radius:10px; }
+.listener-survey button:disabled { opacity:.6; }
+.listener-survey textarea { box-sizing:border-box; display:block; width:100%; margin-top:8px; background:#fff; color:#222; border-radius:8px; padding:10px; font:inherit; }
+.listener-survey :focus-visible { outline:3px solid #72d8db; outline-offset:3px; }
+
+.listener-survey-launch { position:fixed; right:16px; bottom:calc(16px + env(safe-area-inset-bottom)); z-index:100; max-width:calc(100vw - 32px); padding:10px 15px; border:1px solid #8d7546; border-radius:24px; background:#192124; color:#f0ce8c; font:14px/1.4 system-ui,sans-serif; cursor:pointer; box-shadow:0 4px 16px #0004; }
+.listener-survey-launch:focus-visible { outline:3px solid #72d8db; outline-offset:3px; }

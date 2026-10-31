@@ -1,0 +1,12 @@
+--- server.py
++++ server.py
+@@ -7,0 +8 @@
++from youtube_playlist import get_playlist
+@@ -1091,0 +1093,7 @@
++        if parsed.path == "/api/youtube-playlist":
++            try:
++                self._send_json(HTTPStatus.OK, get_playlist())
++            except RuntimeError:
++                self._send_json(HTTPStatus.SERVICE_UNAVAILABLE, {"error": "playlist temporarily unavailable"})
++            return
++
